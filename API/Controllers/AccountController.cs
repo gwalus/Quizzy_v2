@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api")]
     public class AccountController : ControllerBase
     {
         UserManager<AppUser> _userManager;
@@ -14,24 +12,6 @@ namespace API.Controllers
         public AccountController(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> GetString()
-        {
-            var user = new AppUser
-            {
-                UserName = "user"
-            };
-
-            var result = await _userManager.CreateAsync(user);
-
-            if (result.Succeeded)
-            {
-                return Ok("Added");
-            }
-
-            return Ok("Fail");
         }
     }
 }
