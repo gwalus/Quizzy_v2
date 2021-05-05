@@ -1,4 +1,5 @@
 ﻿using API.Data;
+using API.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<QuizContext>(options =>
             {
                 //options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
