@@ -20,6 +20,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationServices(_configuration);
+            services.AddIdentityService();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
