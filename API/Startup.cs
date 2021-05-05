@@ -1,4 +1,5 @@
 using API.Extensions;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationServices(_configuration);
+            services.AddSingleton<ISystemClock, SystemClock>();
             services.AddIdentityService();
             services.AddControllers();
             services.AddSwaggerGen(c =>
