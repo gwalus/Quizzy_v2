@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    public class AccountController : ControllerBase
+    public class AuthController : ControllerBase
     {
         UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
 
-        public AccountController(UserManager<AppUser> userManager, IMapper mapper, ITokenService tokenService)
+        public AuthController(UserManager<AppUser> userManager, IMapper mapper, ITokenService tokenService)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -26,12 +26,12 @@ namespace API.Controllers
 
         public async Task<ActionResult<AppUserDto>> DefaultRegister(UserDefaultRegisterDto userRegisterDto)
         {
-            if (await UserExists(userRegisterDto.Username)) 
+            if (await UserExists(userRegisterDto.Username))
                 return BadRequest("Username is taken");
 
             var user = _mapper.Map<AppUser>(userRegisterDto);
 
-            user.UserName = userRegisterDto.Username.ToLower();            
+            user.UserName = userRegisterDto.Username.ToLower();
 
             var result = await _userManager.CreateAsync(user, userRegisterDto.Password);
 
@@ -46,6 +46,28 @@ namespace API.Controllers
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user)
             };
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<AppUserDto>> DefaultRegister(UserDefaultLoginDto userDefaultLoginDto)
+        {
+            if (!(await UserExists(userDefaultLoginDto.Username.ToLower())))
+                return NotFound();
+
+            var user = await _userManager.FindByEmailAsync(userDefaultLoginDto.Email);
+
+            var result = await _userManager.CheckPasswordAsync(user, userDefaultLoginDto.Password);
+
+            if (result.IsCompletedSuccessfully)
+            {
+                return new AppUserDto
+                {
+                    Username = user.UserName,
+                    Token = await _tokenService.CreateToken(user)
+                };
+            }
+
+            return BadRequest("Email or password invalid");
         }
 
         private async Task<bool> UserExists(string userName)
