@@ -51,12 +51,9 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<AppUserDto>> DefaultRegister(UserDefaultLoginDto userDefaultLoginDto)
         {
-            if (!(await UserExists(userDefaultLoginDto.Email.ToLower())))
-                return NotFound();
-
             var user = await _userManager.FindByEmailAsync(userDefaultLoginDto.Email);
 
-            if (await _userManager.CheckPasswordAsync(user, userDefaultLoginDto.Password))
+            if (user != null && await _userManager.CheckPasswordAsync(user, userDefaultLoginDto.Password))
             {
                 return new AppUserDto
                 {
