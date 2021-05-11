@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class TriviaService {
-  baseUrl = environment.baseUrl + 'trivia';
+  baseUrl = environment.baseUrl + 'trivia/';
 
   constructor(private http: HttpClient) { }
 
