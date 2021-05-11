@@ -1,4 +1,5 @@
 ﻿using API.Interfaces;
+using API.Models;
 using API.Models.Trivia;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
