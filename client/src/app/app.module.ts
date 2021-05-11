@@ -10,6 +10,7 @@ import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { GameComponent } from './game/game.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,12 @@ import { GameComponent } from './game/game.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    ToastrModule.forRoot({
+      closeButton: true,
+      positionClass: 'toast-bottom-right',
+      progressBar: true
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
