@@ -30,7 +30,7 @@ namespace API.Services
             return null;
         }
 
-        public async Task<IList<Result>> GetQuestions(string categoryId, string difficulty, string amount, string type)
+        public async Task<IList<TriviaQuestion>> GetQuestions(string categoryId, string difficulty, string amount, string type)
         {
             var request = new RestRequest()
                 .AddParameter("category", $"{categoryId}")
@@ -38,10 +38,12 @@ namespace API.Services
                 .AddParameter("amount", $"{amount}")
                 .AddParameter("type", $"{type}");
 
-            var response = await _client.ExecuteAsync<TriviaQuestion>(request);
+            var response = await _client.ExecuteAsync<TriviaQuestions>(request);
 
             if (response.IsSuccessful)
+            {
                 return response.Data.Results;
+            }
 
             return null;
         }

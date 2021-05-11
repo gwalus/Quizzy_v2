@@ -2,13 +2,13 @@
 
 namespace API.Models.Trivia
 {
-    public class TriviaQuestion
+    public class TriviaQuestions
     {
         public int Response_code { get; set; }
-        public IList<Result> Results { get; set; }
+        public IList<TriviaQuestion> Results { get; set; }
     }
 
-    public class Result
+    public class TriviaQuestion
     {
         public string Category { get; set; }
         public string Type { get; set; }

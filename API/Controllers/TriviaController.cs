@@ -16,10 +16,16 @@ namespace API.Controllers
             _triviaService = triviaService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Result>>> GetQuestions([FromQuery] QuestionParams questionParams)
+        [HttpGet("questions")]
+        public async Task<ActionResult<List<TriviaQuestion>>> GetQuestions([FromQuery] QuestionParams questionParams)
         {
             return Ok(await _triviaService.GetQuestions(questionParams.CategoryId, questionParams.Difficulty, questionParams.Amount, questionParams.Type));
+        }
+
+        [HttpGet("quantity")]
+        public async Task<ActionResult<List<TriviaQuestion>>> GetCategoriesQuantity(string categoryId)
+        {
+            return Ok(await _triviaService.GetCategoriesQuantity(categoryId));
         }
     }
 }
