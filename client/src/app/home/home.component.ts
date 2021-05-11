@@ -8,7 +8,10 @@ import { TriviaService } from '../_services/trivia.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  categories: Category[] = []
+  categories: string[] = [];
+  colorTypes: string[] = [
+    'secondary', 'dark', 'info', 'success', 'primary', 'warning', 'danger'
+  ];
 
   constructor(private triviaService: TriviaService) { }
 
@@ -18,8 +21,11 @@ export class HomeComponent implements OnInit {
 
   loadCategories() {
     this.triviaService.getCategories().subscribe(response => {
-      this.categories = response as Category[];
-    }
-    )
+      this.categories = (response as Category[]).map(x => x.name);
+    });
+  }
+
+  getRandomBtnColor() {
+    return this.colorTypes[Math.floor(Math.random() * this.colorTypes.length)];
   }
 }

@@ -1,26 +1,14 @@
-<div class="container mt-2">
+<div class="container" style="margin: 5% auto">
     <div class="jumbotron">
         <h1 class="display-3">Welcome in Quizzy</h1>
-        <p class="lead">This application checks knowledge from different categories e.g.</p>
-        <ul style="list-style: square;">
-            <li>Sports</li>
-            <li>Video games</li>
-            <li>Comics</li>
-            <li>Geography</li>
-        </ul>
-        <hr class="my-4">
-        <!-- <img src="../assets/logo.png" alt="quizzy"> -->
-        <!-- <p>If you want to test your knowledge, click let's play.</p>
-        <p class="lead">
-            <a class="btn btn-secondary btn-lg" href="#" role="button">Let's play!</a>
-        </p> -->
+        <p class="lead">This application checks knowledge from different categories.</p>
 
-        <div class="d-flex flex-row bd-highlight mb-3">
-            <div class="p-2 bd-highlight border">Flex item 1</div>
-            <div class="p-2 bd-highlight border">Flex item 2</div>
-            <div class="p-2 bd-highlight border">Flex item 3</div>
+        <div class="category-inline">
+            <button class="flex-item btn btn-outline-{{getRandomBtnColor()}}" style="border: 2px solid;"
+                *ngFor="let category of categories">{{category}}</button>
         </div>
 
+        <hr class="my-4">
 
         <div class="col-sm-8">
             <p class="d-inline-block">If you want to test your knowledge, click let's play.</p>
