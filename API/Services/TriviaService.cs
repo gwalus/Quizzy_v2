@@ -1,8 +1,6 @@
-﻿using API.Dtos;
-using API.Interfaces;
+﻿using API.Interfaces;
 using API.Models.Trivia;
 using RestSharp;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,9 +10,16 @@ namespace API.Services
     {
         private readonly RestClient _client = new RestClient("https://opentdb.com/api.php?");
 
-        public async Task<IList<TriviaCategoryDto>> GetCategories()
+        public async Task<IList<Category>> GetCategories()
         {
-            throw new NotImplementedException();
+            var request = new RestRequest("https://opentdb.com/api_category.php");
+
+            var response = await _client.ExecuteAsync<TriviaCategory>(request);
+
+            if(response.IsSuccessful)
+                return response.Data.Trivia_categories;
+
+            return null;
         }
 
         public async Task<CategoryQuestionCount> GetCategoriesQuantity(string categoryId)
