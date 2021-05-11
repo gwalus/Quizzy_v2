@@ -27,5 +27,11 @@ namespace API.Controllers
         {
             return Ok(await _triviaService.GetCategoriesQuantity(categoryId));
         }
+
+        [HttpGet("categories")]
+        public async Task<ActionResult<List<Category>>> GetCategories()
+        {
+            return Ok(await _triviaService.GetCategories());
+        }
     }
 }
