@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.Interfaces
 {
-    interface ITriviaService
+    public interface ITriviaService
     {
         Task<IList<Result>> GetQuestions(string categoryId, string difficulty, string amount, string type);
         Task<IList<TriviaCategoryDto>> GetCategories();
