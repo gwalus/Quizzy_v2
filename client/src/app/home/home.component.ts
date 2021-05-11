@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from '../_models/category';
 import { TriviaService } from '../_services/trivia.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { TriviaService } from '../_services/trivia.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  categories: any = {};
+  categories: Category[] = []
 
   constructor(private triviaService: TriviaService) { }
 
@@ -17,8 +18,7 @@ export class HomeComponent implements OnInit {
 
   loadCategories() {
     this.triviaService.getCategories().subscribe(response => {
-      this.categories = response;
-      console.log(response);
+      this.categories = response as Category[];
     }
     )
   }
