@@ -17,9 +17,17 @@ namespace API.Services
             throw new NotImplementedException();
         }
 
-        public Task<CategoryQuestionCount> GetCategoriesQuantity(string categoryId)
+        public async Task<CategoryQuestionCount> GetCategoriesQuantity(string categoryId)
         {
-            throw new NotImplementedException();
+            var request = new RestRequest("https://opentdb.com/api_count.php?category")
+                .AddParameter("category", $"{categoryId}");
+
+            var response = await _client.ExecuteAsync<TriviaCategoryQuantity>(request);
+
+            if (response.IsSuccessful)
+                return response.Data.Category_question_count;
+
+            return null;
         }
 
         public async Task<IList<Result>> GetQuestions(string categoryId, string difficulty, string amount, string type)
