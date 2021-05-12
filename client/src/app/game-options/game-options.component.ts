@@ -14,6 +14,7 @@ export class GameOptionsComponent implements OnInit {
   id: string;
   category: string;
   numbersOfQuestions: NumbersOfQuestions;
+  loading = false;
 
   difficulty = [
     'Easy', 'Medium', 'Hard'
@@ -28,8 +29,10 @@ export class GameOptionsComponent implements OnInit {
   constructor(public bsModalRef: BsModalRef, private triviaService: TriviaService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.triviaService.getNumbersOfQuestionsCategory(this.id).subscribe(response => {
       this.numbersOfQuestions = response;
+      this.loading = !this.loading;
     })
 
     this.optionsModel = this.formBuilder.group({

@@ -30,10 +30,20 @@ export class TriviaService {
   }
 
   getNumbersOfQuestionsCategory(categoryId: string) {
+    let response = this.triviaCache.get(categoryId);
+    if (response) {
+      return of(response);
+    }
+
     let params = new HttpParams();
     params = params.append('categoryId', categoryId);
 
-    return this.http.get<NumbersOfQuestions>(this.baseUrl + 'quantity', { params });
+    return this.http.get<NumbersOfQuestions>(this.baseUrl + 'quantity', { params }).pipe(
+      map(response => {
+        this.triviaCache.set(categoryId, response);
+        return response;
+      })
+    );
   }
 
   getQuestions(categoryId: string, difficulty: string, amount: string) {
