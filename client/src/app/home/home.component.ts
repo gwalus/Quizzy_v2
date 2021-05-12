@@ -18,10 +18,11 @@ export class HomeComponent implements OnInit {
   ];
   randomTypes: string[] = [];
   choosedCategory?: string;
+  loading = false;
 
   bsModalRef: BsModalRef;
 
-  constructor(private triviaService: TriviaService, private toastr: ToastrService, private router: Router, private modalService: BsModalService) {
+  constructor(private triviaService: TriviaService, private toastr: ToastrService, private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
@@ -30,8 +31,10 @@ export class HomeComponent implements OnInit {
   }
 
   loadCategories() {
+    this.loading = true;
     this.triviaService.getCategories().subscribe(response => {
       this.categories = response as Category[];
+      this.loading = !this.loading;
     });
   }
 
@@ -59,7 +62,6 @@ export class HomeComponent implements OnInit {
     if (this.choosedCategory) {
       let category = this.categories.filter(x => x.id === this.choosedCategory)[0];
 
-      console.log(category);
       const initialState = {
         id: `${category.id}`,
         category: `${category.name}`,
