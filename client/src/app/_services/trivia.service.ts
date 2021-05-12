@@ -1,5 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Category } from '../_models/category';
 import { NumbersOfQuestions } from '../_models/numbersOfQuestions';
@@ -10,6 +12,9 @@ import { Question } from '../_models/question';
 })
 export class TriviaService {
   baseUrl = environment.baseUrl + 'trivia/';
+
+  private currentQuestionsSource = new ReplaySubject(1);
+  currentQuestions$ = this.currentQuestionsSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -30,6 +35,15 @@ export class TriviaService {
     params = params.append('difficulty', difficulty);
     params = params.append('amount', amount);
 
-    return this.http.get<Question[]>(this.baseUrl + 'questions', { params });
+    return this.http.get<Question[]>(this.baseUrl + 'questions', { params }).pipe(
+      map((response: Question[]) => {
+        const questions = response;
+        this.setCurrentQuestions(questions);
+      })
+    );
+  }
+
+  setCurrentQuestions(questions: Question[]) {
+    this.currentQuestionsSource.next(questions);
   }
 }
