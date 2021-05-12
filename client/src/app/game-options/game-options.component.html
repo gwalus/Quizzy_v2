@@ -5,15 +5,19 @@
     </button>
 </div>
 <div class="modal-body">
-    <li>{{category}}</li>
+    <h2>Category: {{category}}</h2>
 
-    <!-- <form>
-        <select name="" id="">
-            <option value="easy"></option>
-            <option value="medium"></option>
-            <option value="hard"></option>
+    <form>
+        <label>Difficult</label>
+        <select class="form-control" name="" id="">
+            <option *ngFor="let difficult of difficulty">{{difficult}}</option>
         </select>
-    </form> -->
+
+        <label>Number of questions</label>
+        <select class="form-control" name="" id="">
+            <option *ngFor="let number of numberOfQuestions">{{number}}</option>
+        </select>
+    </form>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary btn-md">Play !</button>

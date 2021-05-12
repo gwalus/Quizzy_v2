@@ -11,6 +11,14 @@ export class GameOptionsComponent implements OnInit {
   id: string;
   category: string;
 
+  difficulty = [
+    'Easy', 'Medium', 'Hard'
+  ]
+
+  numberOfQuestions = [
+    5, 10, 15
+  ]
+
   constructor(public bsModalRef: BsModalRef) { }
 
   ngOnInit(): void {
