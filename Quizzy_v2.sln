@@ -1,8 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{42837164-EDD2-4011-AD4D-B57588FF036A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,7 +14,24 @@ Global
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Debug|x64.Build.0 = Debug|Any CPU
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Debug|x86.Build.0 = Debug|Any CPU
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Release|x64.ActiveCfg = Release|Any CPU
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Release|x64.Build.0 = Release|Any CPU
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Release|x86.ActiveCfg = Release|Any CPU
+		{42837164-EDD2-4011-AD4D-B57588FF036A}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72B042E5-3128-4794-BE82-F5602FA60911}
 	EndGlobalSection
 EndGlobal
