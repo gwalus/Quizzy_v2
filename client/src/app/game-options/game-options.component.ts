@@ -32,6 +32,7 @@ export class GameOptionsComponent implements OnInit {
     })
 
     this.optionsModel = this.formBuilder.group({
+      id: this.id,
       level: this.difficulty[0],
       numberOfQuestions: this.numberOfQuestions[1]
     })

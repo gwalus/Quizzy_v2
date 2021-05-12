@@ -2,9 +2,9 @@
 {
     public class QuestionParams
     {
-        public string CategoryId { get; set; } = "9";
+        public string CategoryId { get; set; }
         public string Difficulty { get; set; } = "easy";
-        public string Amount { get; set; } = "5";
+        public string Amount { get; set; } = "10";
         public string Type { get; set; } = "multiple";
     }
 }
