@@ -11,6 +11,8 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { GameComponent } from './game/game.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { GameOptionsComponent } from './game-options/game-options.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +20,15 @@ import { ToastrModule } from 'ngx-toastr';
     NavComponent,
     FooterComponent,
     HomeComponent,
-    GameComponent
+    GameComponent,
+    GameOptionsComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    ModalModule.forRoot(),
     MDBBootstrapModule.forRoot(),
     ToastrModule.forRoot({
       closeButton: true,

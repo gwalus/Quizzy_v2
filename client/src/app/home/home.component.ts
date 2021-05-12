@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { interval } from 'rxjs';
+import { GameOptionsComponent } from '../game-options/game-options.component';
 import { Category } from '../_models/category';
 import { TriviaService } from '../_services/trivia.service';
 
@@ -18,7 +19,9 @@ export class HomeComponent implements OnInit {
   randomTypes: string[] = [];
   choosedCategory?: string;
 
-  constructor(private triviaService: TriviaService, private toastr: ToastrService, private router: Router) {
+  bsModalRef: BsModalRef;
+
+  constructor(private triviaService: TriviaService, private toastr: ToastrService, private router: Router, private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
@@ -46,16 +49,24 @@ export class HomeComponent implements OnInit {
       table.push(randomColor);
     }
     this.randomTypes = table;
-
   }
 
   chooseCategory(categoryId: string) {
     this.choosedCategory = categoryId;
   }
 
-  startQuiz() {
-    if (this.choosedCategory)
-      this.router.navigateByUrl('game');
+  openModalWithGameOptions() {
+    if (this.choosedCategory) {
+      let category = this.categories.filter(x => x.id === this.choosedCategory)[0];
+
+      console.log(category);
+      const initialState = {
+        title: 'Game options',
+        id: `${category.id}`,
+        category: `${category.name}`,
+      };
+      this.bsModalRef = this.modalService.show(GameOptionsComponent, { initialState });
+    }
     else this.toastr.error('You have not selected any category.');
   }
 }
