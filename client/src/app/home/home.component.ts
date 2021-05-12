@@ -61,7 +61,6 @@ export class HomeComponent implements OnInit {
 
       console.log(category);
       const initialState = {
-        title: 'Game options',
         id: `${category.id}`,
         category: `${category.name}`,
       };

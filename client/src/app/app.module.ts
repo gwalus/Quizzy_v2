@@ -13,6 +13,7 @@ import { GameComponent } from './game/game.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { GameOptionsComponent } from './game-options/game-options.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { GameOptionsComponent } from './game-options/game-options.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     ModalModule.forRoot(),
     MDBBootstrapModule.forRoot(),
     ToastrModule.forRoot({
