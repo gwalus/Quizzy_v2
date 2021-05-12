@@ -1,4 +1,8 @@
 <div class="container" style="margin: 3% auto;" *ngIf="!loading">
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar"
+            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+    </div>
     <div class="jumbotron">
         <h1 class="display-3">Welcome in Quizzy</h1>
         <p class="lead">This application checks knowledge from different categories.</p>
@@ -16,6 +20,4 @@
                 play!</button>
         </div>
     </div>
-
-
 </div>
