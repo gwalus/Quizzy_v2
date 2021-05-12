@@ -4,7 +4,7 @@
         <p class="lead">This application checks knowledge from different categories.</p>
 
         <div class="category-inline">
-            <button class="flex-item btn btn-outline-{{getRandomBtnColor()}}" style="border: 2px solid;"
+            <button class="flex-item btn btn-outline-{{getRandomBtnColor(category.id)}}" style="border: 2px solid;"
                 *ngFor="let category of categories" (click)="chooseCategory(category.id)">{{category.name}}</button>
         </div>
 
@@ -12,7 +12,7 @@
 
         <div class="col-sm-8">
             <p class="d-inline-block">If you want to test your knowledge, click let's play.</p>
-            <button type="button" class="btn btn-secondary btn-md ml-2 p-1" (click)="StartQuiz()">Let's play!</button>
+            <button type="button" class="btn btn-secondary btn-md ml-2 p-1" (click)="startQuiz()">Let's play!</button>
         </div>
     </div>
 
