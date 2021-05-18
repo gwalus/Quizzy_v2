@@ -43,21 +43,16 @@ export class GameOptionsComponent implements OnInit {
   }
 
   play() {
-    console.log(this.optionsModel.value);
-
     let id = this.optionsModel.controls['id'].value;
     let level = this.optionsModel.controls['level'].value;
     let numberOfQuestions = this.optionsModel.controls['numberOfQuestions'].value;
 
-    this.triviaService.getQuestions(id, level, numberOfQuestions).subscribe(
-      () => {
-        this.bsModalRef.hide();
-        this.router.navigateByUrl('game');
-      },
-      () => {
-        console.log('Something went wrong')
-      }
-    );
+    let optionsModel: string[] = [id, level, numberOfQuestions];
+
+    this.triviaService.setUserOptions(optionsModel);
+
+    this.bsModalRef.hide();
+    this.router.navigateByUrl('game');
   }
 
 }
