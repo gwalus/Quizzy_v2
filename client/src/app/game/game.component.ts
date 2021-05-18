@@ -9,9 +9,10 @@ import { TriviaService } from '../_services/trivia.service';
   styleUrls: ['./game.component.css'],
 })
 export class GameComponent implements OnInit {
-  questions: Question[];
+  questions: Question[] = [];
   currentQuestion: Question;
-  currentQuestionNumber: number;
+  currentQuestionNumber: number = 0;
+  currentAnswers: string[];
 
   strange: string = 'Where is the train station &quot;Llanfair&shy;pwllgwyngyll&shy;gogery&shy;chwyrn&shy;drobwll&shy;llan&shy;tysilio&shy;gogo&shy;goch&quot;?'
 
@@ -25,17 +26,26 @@ export class GameComponent implements OnInit {
     this.triviaService.getQuestions().subscribe(
       questions => {
         this.questions = questions
+        let currentQuestionNumber = 0;
 
-        this.currentQuestionNumber = 0;
-        this.setCurrentQuestion()
+        this.setCurrentQuestion(currentQuestionNumber)
+        this.setCurrentAnswers()
       },
       error => console.log(error.error)
-    )
+    );
   }
 
-  setCurrentQuestion() {
-    this.currentQuestion = this.questions[this.currentQuestionNumber]
-    console.log(this.currentQuestion);
+  setCurrentQuestion(questionNumber: number) {
+    this.currentQuestion = this.questions[questionNumber];
+  }
+
+  setCurrentAnswers() {
+    let question = this.currentQuestion;
+    console.log(question)
+
+    let answers = question.incorrect_answers;
+    answers.push(question.correct_answer)
+    console.log(answers);
   }
 
 }
