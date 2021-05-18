@@ -1,50 +1,56 @@
 <div class="container" style="margin: 3% auto">
     <div class="jumbotron">
-        <div class="row text-right">
-            <h3 class="display-5">{{currentQuestion?.category}}</h3>
-            <p class="font-italic">{{currentQuestion?.difficulty}}</p>
+        <div class="mt-0">
+            <progressbar class="progress-striped active" [value]="progressBarValue" [type]="progressBarType">
+                {{progressBarValue}} s </progressbar>
+
+            <div class="row text-right">
+                <h3 class="display-5">{{currentQuestion?.category}}</h3>
+                <p class="font-italic">{{currentQuestion?.difficulty}}</p>
+            </div>
+
+            <hr class="my-2">
+            <p class="lead wrap mb-4">{{currentQuestion?.question}}</p>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card border-{{answerColorDisplay[0]}} mb-3" style="max-width: 20rem;"
+                        (click)="checkAnswer(currentAnswers[0], 0)">
+                        <div class="card-header">Answer</div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{currentAnswers && currentAnswers[0]?.toString()}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-{{answerColorDisplay[1]}} mb-3" style="max-width: 20rem;"
+                        (click)="checkAnswer(currentAnswers[1], 1)">
+                        <div class="card-header">Answer 2</div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{currentAnswers && currentAnswers[1]?.toString()}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-{{answerColorDisplay[2]}} mb-3" style="max-width: 20rem;"
+                        (click)="checkAnswer(currentAnswers[2], 2)">
+                        <div class="card-header">Answer 3</div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{currentAnswers && currentAnswers[2]?.toString()}}</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card border-{{answerColorDisplay[3]}} mb-3" style="max-width: 20rem;"
+                        (click)="checkAnswer(currentAnswers[3], 3)">
+                        <div class="card-header">Answer 4</div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{currentAnswers && currentAnswers[3]?.toString()}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <hr class="my-2">
-        <p class="lead wrap mb-4">{{currentQuestion?.question}}</p>
-
-        <div class="row">
-            <div class="col">
-                <div class="card border-{{answerColorDisplay[0]}} mb-3" style="max-width: 20rem;"
-                    (click)="checkAnswer(currentAnswers[0], 0)">
-                    <div class="card-header">Answer</div>
-                    <div class="card-body">
-                        <h4 class="card-title">{{currentAnswers && currentAnswers[0]?.toString()}}</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card border-{{answerColorDisplay[1]}} mb-3" style="max-width: 20rem;"
-                    (click)="checkAnswer(currentAnswers[1], 1)">
-                    <div class="card-header">Answer 2</div>
-                    <div class="card-body">
-                        <h4 class="card-title">{{currentAnswers && currentAnswers[1]?.toString()}}</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card border-{{answerColorDisplay[2]}} mb-3" style="max-width: 20rem;"
-                    (click)="checkAnswer(currentAnswers[2], 2)">
-                    <div class="card-header">Answer 3</div>
-                    <div class="card-body">
-                        <h4 class="card-title">{{currentAnswers && currentAnswers[2]?.toString()}}</h4>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card border-{{answerColorDisplay[3]}} mb-3" style="max-width: 20rem;"
-                    (click)="checkAnswer(currentAnswers[3], 3)">
-                    <div class="card-header">Answer 4</div>
-                    <div class="card-body">
-                        <h4 class="card-title">{{currentAnswers && currentAnswers[3]?.toString()}}</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>

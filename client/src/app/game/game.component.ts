@@ -1,13 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { ProgressbarConfig, ProgressbarType } from 'ngx-bootstrap/progressbar';
 import { Question } from '../_models/question';
 import { TriviaService } from '../_services/trivia.service';
+
+export function getProgressbarConfig(): ProgressbarConfig {
+  return Object.assign(new ProgressbarConfig(), { animate: true, striped: true, max: 30 });
+}
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css'],
+  providers: [{ provide: ProgressbarConfig, useFactory: getProgressbarConfig }]
 })
 export class GameComponent implements OnInit {
+  timeForAnswer: NodeJS.Timeout;
+
+  progressBarMaxValue: number = 30;
+  progressBarValue: number = 30;
+  progressBarType: ProgressbarType = 'success';
+
   loading = true;
   questions: Question[] = [];
   currentQuestion: Question;
@@ -22,6 +34,8 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadQuestions();
+
+    this.timeForAnswer = setInterval(() => this.changeProgressBarValue(), 1000);
   }
 
   loadQuestions() {
@@ -85,6 +99,29 @@ export class GameComponent implements OnInit {
     } else {
       this.answerColorDisplay[index] = 'danger'
     }
+  }
+
+  changeProgressBarValue(): void {
+    let maxValue: number = this.progressBarMaxValue;
+    let value: number = this.progressBarValue;
+    let currentQuestionNumber = this.currentQuestionNumber;
+    let type: string;
+
+    value--;
+
+    if (value === 0) {
+      type = 'success';
+      value = maxValue;
+      this.currentQuestionNumber++;
+      this.setCurrentQuestion(this.currentQuestionNumber);
+      this.setCurrentAnswers();
+    }
+    else if (value < maxValue * 0.25) type = 'danger';
+    else if (value < maxValue * 0.5) type = 'warning';
+    else type = 'success';
+
+    this.progressBarValue = value;
+    this.progressBarType = type as ProgressbarType;
   }
 
 }
