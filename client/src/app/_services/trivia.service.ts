@@ -51,9 +51,9 @@ export class TriviaService {
 
   getQuestions() {
     let params = new HttpParams();
-    params = params.append('categoryId', this.options.categoryId);
-    params = params.append('difficulty', this.options.difficulty.toLowerCase());
-    params = params.append('amount', this.options.amount);
+    params = params.append('categoryId', this.options?.categoryId);
+    params = params.append('difficulty', this.options?.difficulty.toLowerCase());
+    params = params.append('amount', this.options?.amount);
 
     return this.http.get<Question[]>(this.baseUrl + 'questions', { params })
   }

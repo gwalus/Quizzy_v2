@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProgressbarConfig, ProgressbarType } from 'ngx-bootstrap/progressbar';
 import { Question } from '../_models/question';
+import { QuizResult } from '../_models/quizResult';
 import { TriviaService } from '../_services/trivia.service';
 
 export function getProgressbarConfig(): ProgressbarConfig {
@@ -29,7 +30,8 @@ export class GameComponent implements OnInit {
   currentAnswers: string[];
   currentCorrectAnswer: string;
   answerColorDisplay: string[] = ['dark', 'dark', 'dark', 'dark']
-  
+
+  quizResult: QuizResult;
 
   points: number = 0;
 
@@ -67,16 +69,12 @@ export class GameComponent implements OnInit {
 
   setCurrentAnswers() {
     let question = this.currentQuestion;
-    console.log(question)
 
-    let answers = question.incorrect_answers;
+    let answers = question?.incorrect_answers;
     answers.push(question.correct_answer)
-    console.log(answers);
-
     answers = this.shuffleAnswers(answers)
 
     this.currentCorrectAnswer = question.correct_answer;
-    console.log(this.currentCorrectAnswer)
     this.currentAnswers = answers;
   }
 
@@ -105,7 +103,6 @@ export class GameComponent implements OnInit {
     if (this.currentCorrectAnswer === userAnswer) {
       answersColor[index] = 'success'
       this.points += this.calculatePoint();
-      console.log(this.points);
 
     } else {
       this.answerColorDisplay[index] = 'danger'
