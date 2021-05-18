@@ -1,6 +1,11 @@
 <div class="container" style="margin: 3% auto">
     <div class="jumbotron">
-        <!-- <h1 class="display-3">Welcome in Quizzy</h1> -->
+        <div class="row text-right">
+            <h3 class="display-5">{{currentQuestion?.category}}</h3>
+            <p>{{currentQuestion?.difficulty}}</p>
+        </div>
+
+
         <p class="lead wrap">{{currentQuestion?.question}}</p>
         <hr class="my-4">
 
