@@ -99,6 +99,9 @@ export class GameComponent implements OnInit {
     } else {
       this.answerColorDisplay[index] = 'danger'
     }
+
+    this.goToNextQuestion();
+    this.timeForAnswer = setInterval(() => this.changeProgressBarValue(), 1000);
   }
 
   changeProgressBarValue(): void {
@@ -122,6 +125,18 @@ export class GameComponent implements OnInit {
 
     this.progressBarValue = value;
     this.progressBarType = type as ProgressbarType;
+  }
+
+  goToNextQuestion() {    
+    this.currentQuestionNumber++;
+    this.setCurrentQuestion(this.currentQuestionNumber);
+    this.setCurrentAnswers();
+    this.setDefaultAnswerValidBorders();
+    clearInterval(this.timeForAnswer);
+  }
+
+  setDefaultAnswerValidBorders() {
+    this.answerColorDisplay = ['dark', 'dark', 'dark', 'dark']
   }
 
 }
