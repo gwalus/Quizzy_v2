@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    public class AuthController : ControllerBase
+    public class AuthController : BaseApiController
     {
         UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;

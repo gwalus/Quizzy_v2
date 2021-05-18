@@ -5,6 +5,8 @@ import { Category } from '../_models/category';
 import { NumbersOfQuestions } from '../_models/numbersOfQuestions';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Question } from '../_models/question';
+import { UserOptions } from '../_models/userOptions';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ import { of } from 'rxjs';
 export class TriviaService {
   baseUrl = environment.baseUrl + 'trivia/';
   triviaCache = new Map();
+  options: UserOptions
 
   constructor(private http: HttpClient) { }
 
@@ -30,18 +33,32 @@ export class TriviaService {
   }
 
   getNumbersOfQuestionsCategory(categoryId: string) {
+    let response = this.triviaCache.get(categoryId);
+    if (response) {
+      return of(response);
+    }
+
     let params = new HttpParams();
     params = params.append('categoryId', categoryId);
 
-    return this.http.get<NumbersOfQuestions>(this.baseUrl + 'quantity', { params });
+    return this.http.get<NumbersOfQuestions>(this.baseUrl + 'quantity', { params }).pipe(
+      map(response => {
+        this.triviaCache.set(categoryId, response);
+        return response;
+      })
+    );
   }
 
-  getQuestions(categoryId: string, difficulty: string, amount: string) {
+  getQuestions() {
     let params = new HttpParams();
-    params = params.append('categoryId', categoryId);
-    params = params.append('difficulty', difficulty);
-    params = params.append('amount', amount);
+    params = params.append('categoryId', this.options?.categoryId);
+    params = params.append('difficulty', this.options?.difficulty.toLowerCase());
+    params = params.append('amount', this.options?.amount);
 
-    return this.http.get(this.baseUrl + 'questions', { params })
+    return this.http.get<Question[]>(this.baseUrl + 'questions', { params })
+  }
+
+  setUserOptions(userOptions: UserOptions) {
+    this.options = userOptions;
   }
 }

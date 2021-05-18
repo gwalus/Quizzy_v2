@@ -1,54 +1,107 @@
 <div class="container" style="margin: 3% auto">
-    <div class="jumbotron">
-        <!-- <h1 class="display-3">Welcome in Quizzy</h1> -->
-        <p class="lead wrap">{{currentQuestion.question}}</p>
-        <hr class="my-4">
+    <div class="jumbotron" *ngIf="!endQuiz">
+        <div class="mt-0">
+            <progressbar class="progress-striped active" [value]="progressBarValue" [type]="progressBarType">
+                {{progressBarValue}} s </progressbar>
 
-        <div class="row">
-            <div class="col">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
-                    <div class="card-header">Answer 1</div>
-                    <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <p class="card-text">{{currentQuestion}}</p>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
-                    <div class="card-header">Answer 2</div>
-                    <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <p class="card-text">{{currentQuestion}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
-                    <div class="card-header">Answer 3</div>
-                    <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <p class="card-text">{{currentQuestion}}</p>
-                    </div>
-                </div>
+            <div class="row text-right">
+                <h3 class="display-5">{{currentQuestion?.category}}</h3>
+                <p class="font-italic">{{currentQuestion?.difficulty}}</p>
             </div>
 
-            <div class="col">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
-                    <div class="card-header">Answer 4</div>
-                    <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <p class="card-text">{{currentQuestion}}</p>
+            <hr class="my-2">
+            <p class="lead wrap mb-4">{{currentQuestion?.question}}</p>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card border-{{answerColorDisplay[0]}} mb-3" style="max-width: 20rem;"
+                        (click)="checkAnswer(currentAnswers[0], 0)" onclick="this.disabled=true">
+                        <div class="card-header">Answer</div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{currentAnswers && currentAnswers[0]?.toString()}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-{{answerColorDisplay[1]}} mb-3" style="max-width: 20rem;"
+                        (click)="checkAnswer(currentAnswers[1], 1)">
+                        <div class="card-header">Answer 2</div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{currentAnswers && currentAnswers[1]?.toString()}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-{{answerColorDisplay[2]}} mb-3" style="max-width: 20rem;"
+                        (click)="checkAnswer(currentAnswers[2], 2)">
+                        <div class="card-header">Answer 3</div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{currentAnswers && currentAnswers[2]?.toString()}}</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card border-{{answerColorDisplay[3]}} mb-3" style="max-width: 20rem;"
+                        (click)="checkAnswer(currentAnswers[3], 3)">
+                        <div class="card-header">Answer 4</div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{currentAnswers && currentAnswers[3]?.toString()}}</h4>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="jumbotron" style="padding: 2rem 2rem;" *ngIf="endQuiz">
+        <h1 class="display-5">Result</h1>
 
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Difficulty</th>
+                    <th scope="col">Ammount</th>
+                    <th scope="col">Total score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{quizResult.category}}</td>
+                    <td>{{quizResult.difficulty}}</td>
+                    <td>{{quizResult.ammount}}</td>
+                    <td>{{quizResult.totalScore}}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <!-- <div class="row" *ngFor="let item of questions">
-        <li>{{item.question}}</li>
+        <hr class="my-4">
+        <h1 class="display-5">Details</h1>
+
+        <table class="table table-striped" style="table-layout: fixed; width: 100%;">
+            <tbody>
+                <tr>
+                    <th>User answers</th>
+                    <td *ngFor="let userAnswer of quizResult.userAnswers">
+                <tr>{{userAnswer}}</tr>
+                </td>
+                </tr>
+
+                <tr>
+                    <th>Correct answers</th>
+                    <td *ngFor="let correctAnswer of quizResult.correctAnswers">
+                <tr>{{correctAnswer}}</tr>
+                </td>
+                </tr>
+
+                <tr>
+                    <th>Points</th>
+                    <td *ngFor="let point of quizResult.points">
+                <tr>{{point}}</tr>
+                </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</div> -->
+</div>
