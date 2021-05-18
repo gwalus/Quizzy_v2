@@ -11,49 +11,37 @@
 
         <div class="row">
             <div class="col">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
-                    <div class="card-header">Answer 1</div>
+                <div class="card border-dark mb-3" style="max-width: 20rem;">
+                    <div class="card-header">Answer</div>
                     <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <!-- <p class="card-text">{{currentQuestion?.}}</p> -->
-
+                        <h4 class="card-title">{{currentAnswers && currentAnswers[0]?.toString()}}</h4>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                <div class="card border-dark mb-3" style="max-width: 20rem;">
                     <div class="card-header">Answer 2</div>
                     <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <!-- <p class="card-text">{{currentQuestion}}</p> -->
+                        <h4 class="card-title">{{currentAnswers && currentAnswers[1]?.toString()}}</h4>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                <div class="card border-dark mb-3" style="max-width: 20rem;">
                     <div class="card-header">Answer 3</div>
                     <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <!-- <p class="card-text">{{currentQuestion}}</p> -->
+                        <h4 class="card-title">{{currentAnswers && currentAnswers[2]?.toString()}}</h4>
                     </div>
                 </div>
             </div>
 
             <div class="col">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                <div class="card border-dark mb-3" style="max-width: 20rem;">
                     <div class="card-header">Answer 4</div>
                     <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <!-- <p class="card-text">{{currentQuestion}}</p> -->
+                        <h4 class="card-title">{{currentAnswers && currentAnswers[3]?.toString()}}</h4>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-    <!-- <div class="row" *ngFor="let item of questions">
-        <li>{{item.question}}</li>
-    </div>
-</div> -->
