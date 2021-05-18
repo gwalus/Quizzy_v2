@@ -1,5 +1,5 @@
 <div class="container" style="margin: 3% auto">
-    <div class="jumbotron">
+    <div class="jumbotron" *ngIf="!endQuiz">
         <div class="mt-0">
             <progressbar class="progress-striped active" [value]="progressBarValue" [type]="progressBarType">
                 {{progressBarValue}} s </progressbar>
@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col">
                     <div class="card border-{{answerColorDisplay[0]}} mb-3" style="max-width: 20rem;"
-                        (click)="checkAnswer(currentAnswers[0], 0)">
+                        (click)="checkAnswer(currentAnswers[0], 0)" onclick="this.disabled=true">
                         <div class="card-header">Answer</div>
                         <div class="card-body">
                             <h4 class="card-title">{{currentAnswers && currentAnswers[0]?.toString()}}</h4>
@@ -53,4 +53,13 @@
             </div>
         </div>
 
+
+
     </div>
+
+    <div class="jumbotron" *ngIf="endQuiz">
+        Points {{points}}
+        {{userOptions.difficulty}}
+        {{userOptions.amount}}
+    </div>
+</div>

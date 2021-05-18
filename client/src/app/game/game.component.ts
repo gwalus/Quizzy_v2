@@ -15,6 +15,8 @@ export function getProgressbarConfig(): ProgressbarConfig {
 })
 export class GameComponent implements OnInit {
   timeForAnswer: NodeJS.Timeout;
+  endQuiz = false;
+  disableButton = false;
 
   progressBarMaxValue: number = 30;
   progressBarValue: number = 30;
@@ -27,6 +29,9 @@ export class GameComponent implements OnInit {
   currentAnswers: string[];
   currentCorrectAnswer: string;
   answerColorDisplay: string[] = ['dark', 'dark', 'dark', 'dark']
+  
+
+  points: number = 0;
 
   strange: string = 'Where is the train station &quot;Llanfair&shy;pwllgwyngyll&shy;gogery&shy;chwyrn&shy;drobwll&shy;llan&shy;tysilio&shy;gogo&shy;goch&quot;?'
 
@@ -35,7 +40,11 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.loadQuestions();
 
-    this.timeForAnswer = setInterval(() => this.changeProgressBarValue(), 1000);
+    this.timeForAnswer = this.startProgressBar();
+  }
+
+  startProgressBar() {
+    return setInterval(() => this.changeProgressBarValue(), 1000);
   }
 
   loadQuestions() {
@@ -95,13 +104,23 @@ export class GameComponent implements OnInit {
 
     if (this.currentCorrectAnswer === userAnswer) {
       answersColor[index] = 'success'
-      console.log('true');
+      this.points += this.calculatePoint();
+      console.log(this.points);
+
     } else {
       this.answerColorDisplay[index] = 'danger'
     }
 
     this.goToNextQuestion();
-    this.timeForAnswer = setInterval(() => this.changeProgressBarValue(), 1000);
+  }
+
+  calculatePoint(): number {
+    let maxTime: number = this.progressBarMaxValue;
+    let currentTime: number = this.progressBarValue;
+
+    if (currentTime < maxTime * 0.25) return 1;
+    if (currentTime < maxTime * 0.5) return 2;
+    return 3;
   }
 
   changeProgressBarValue(): void {
@@ -114,10 +133,7 @@ export class GameComponent implements OnInit {
 
     if (value === 0) {
       type = 'success';
-      value = maxValue;
-      this.currentQuestionNumber++;
-      this.setCurrentQuestion(this.currentQuestionNumber);
-      this.setCurrentAnswers();
+      this.goToNextQuestion();
     }
     else if (value < maxValue * 0.25) type = 'danger';
     else if (value < maxValue * 0.5) type = 'warning';
@@ -128,13 +144,18 @@ export class GameComponent implements OnInit {
   }
 
   goToNextQuestion() {
+    this.disableButton = true;
     this.setTimeoutBeforeQuestion(1000).then(() => {
+      if (this.currentQuestionNumber + 1 === this.questions.length) {
+        this.endQuiz = true;
+        return
+      }
       this.resetProgressBarValue()
-      clearInterval(this.timeForAnswer);
       this.setDefaultAnswerValidBorders();
       this.currentQuestionNumber++;
       this.setCurrentQuestion(this.currentQuestionNumber);
       this.setCurrentAnswers();
+      this.disableButton = false;
     });
   }
 
