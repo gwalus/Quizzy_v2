@@ -52,13 +52,56 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
 
-    <div class="jumbotron" *ngIf="endQuiz">
-        Points {{points}}
+    <div class="jumbotron" style="padding: 2rem 2rem;" *ngIf="endQuiz">
+        <h1 class="display-5">Result</h1>
 
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Difficulty</th>
+                    <th scope="col">Ammount</th>
+                    <th scope="col">Total score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{quizResult.category}}</td>
+                    <td>{{quizResult.difficulty}}</td>
+                    <td>{{quizResult.ammount}}</td>
+                    <td>{{quizResult.totalScore}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr class="my-4">
+        <h1 class="display-5">Details</h1>
+
+        <table class="table table-striped" style="table-layout: fixed; width: 100%;">
+            <tbody>
+                <tr>
+                    <th>User answers</th>
+                    <td *ngFor="let userAnswer of quizResult.userAnswers">
+                <tr>{{userAnswer}}</tr>
+                </td>
+                </tr>
+
+                <tr>
+                    <th>Correct answers</th>
+                    <td *ngFor="let correctAnswer of quizResult.correctAnswers">
+                <tr>{{correctAnswer}}</tr>
+                </td>
+                </tr>
+
+                <tr>
+                    <th>Points</th>
+                    <td *ngFor="let point of quizResult.points">
+                <tr>{{point}}</tr>
+                </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

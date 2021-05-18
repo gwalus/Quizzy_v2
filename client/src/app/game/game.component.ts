@@ -31,7 +31,7 @@ export class GameComponent implements OnInit {
   currentCorrectAnswer: string;
   answerColorDisplay: string[] = ['dark', 'dark', 'dark', 'dark']
 
-  quizResult: QuizResult;
+  quizResult: QuizResult = new QuizResult();
 
   points: number = 0;
 
@@ -54,6 +54,8 @@ export class GameComponent implements OnInit {
       questions => {
         this.questions = questions
         let currentQuestionNumber = 0;
+
+        this.setQuizModel(questions);
 
         this.setCurrentQuestion(currentQuestionNumber)
         this.setCurrentAnswers()
@@ -97,15 +99,24 @@ export class GameComponent implements OnInit {
     return array;
   }
 
-  checkAnswer(userAnswer: string, index: number) {
+  checkAnswer(userAnswer: string, index?: number) {
     let answersColor = this.answerColorDisplay;
 
-    if (this.currentCorrectAnswer === userAnswer) {
-      answersColor[index] = 'success'
-      this.points += this.calculatePoint();
+    if (this.currentCorrectAnswer === userAnswer && index !== undefined) {
+      answersColor[index as number] = 'success'
+      this.quizResult.userAnswers.push(userAnswer);
 
-    } else {
-      this.answerColorDisplay[index] = 'danger'
+      let point = this.calculatePoint();
+      this.quizResult.points.push(point);
+      this.points += point;
+    } else if (userAnswer === '') {
+      this.quizResult.points.push(0);
+      this.quizResult.userAnswers.push('');
+    }
+    else {
+      this.answerColorDisplay[index as number] = 'danger'
+      this.quizResult.points.push(0);
+      this.quizResult.userAnswers.push(userAnswer);
     }
 
     this.goToNextQuestion();
@@ -130,7 +141,8 @@ export class GameComponent implements OnInit {
 
     if (value === 0) {
       type = 'success';
-      this.goToNextQuestion();
+
+      this.checkAnswer('', undefined)
     }
     else if (value < maxValue * 0.25) type = 'danger';
     else if (value < maxValue * 0.5) type = 'warning';
@@ -144,7 +156,10 @@ export class GameComponent implements OnInit {
     this.disableButton = true;
     this.setTimeoutBeforeQuestion(1000).then(() => {
       if (this.currentQuestionNumber + 1 === this.questions.length) {
+        this.quizResult.totalScore = this.points;
         this.endQuiz = true;
+        clearInterval(this.timeForAnswer);
+        console.log(this.quizResult);
         return
       }
       this.resetProgressBarValue()
@@ -168,4 +183,14 @@ export class GameComponent implements OnInit {
     this.progressBarValue = 30;
   }
 
+  setQuizModel(questions: Question[]) {
+    this.quizResult.category = questions[0].category;
+    this.quizResult.difficulty = this.triviaService.options.difficulty
+    this.quizResult.ammount = parseInt(this.triviaService.options.amount);
+    this.quizResult.id = parseInt(this.triviaService.options.categoryId);
+
+    questions.forEach(element => {
+      this.quizResult.correctAnswers.push(element.correct_answer);
+    });
+  }
 }
