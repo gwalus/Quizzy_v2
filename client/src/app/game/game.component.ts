@@ -14,6 +14,7 @@ export class GameComponent implements OnInit {
   currentQuestionNumber: number = 0;
   currentAnswers: string[];
   currentCorrectAnswer: string;
+  answerColorDisplay: string[] = ['dark', 'dark', 'dark', 'dark']
 
   strange: string = 'Where is the train station &quot;Llanfair&shy;pwllgwyngyll&shy;gogery&shy;chwyrn&shy;drobwll&shy;llan&shy;tysilio&shy;gogo&shy;goch&quot;?'
 
@@ -73,6 +74,17 @@ export class GameComponent implements OnInit {
     }
 
     return array;
+  }
+
+  checkAnswer(userAnswer: string, index: number) {
+    let answersColor = this.answerColorDisplay;
+
+    if (this.currentCorrectAnswer === userAnswer) {
+      answersColor[index] = 'success'
+      console.log('true');
+    } else {
+      this.answerColorDisplay[index] = 'danger'
+    }
   }
 
 }
