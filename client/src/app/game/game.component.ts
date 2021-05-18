@@ -127,16 +127,27 @@ export class GameComponent implements OnInit {
     this.progressBarType = type as ProgressbarType;
   }
 
-  goToNextQuestion() {    
-    this.currentQuestionNumber++;
-    this.setCurrentQuestion(this.currentQuestionNumber);
-    this.setCurrentAnswers();
-    this.setDefaultAnswerValidBorders();
-    clearInterval(this.timeForAnswer);
+  goToNextQuestion() {
+    this.setTimeoutBeforeQuestion(1000).then(() => {
+      this.resetProgressBarValue()
+      clearInterval(this.timeForAnswer);
+      this.setDefaultAnswerValidBorders();
+      this.currentQuestionNumber++;
+      this.setCurrentQuestion(this.currentQuestionNumber);
+      this.setCurrentAnswers();
+    });
   }
 
   setDefaultAnswerValidBorders() {
     this.answerColorDisplay = ['dark', 'dark', 'dark', 'dark']
+  }
+
+  setTimeoutBeforeQuestion(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  resetProgressBarValue() {
+    this.progressBarValue = 30;
   }
 
 }
