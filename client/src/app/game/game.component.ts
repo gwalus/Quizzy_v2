@@ -27,9 +27,13 @@ export class GameComponent implements OnInit {
 
     this.triviaService.getQuestions('9', 'easy', '10').subscribe(
       questions => {
+        console.log(questions);
+        console.log(questions as Question[]);
+        
+        
         let q = <Array<Question>>questions;
         this.currentQuestion = q[0];
-        console.log(q[0]);
+        // console.log(q[0]);
       }
     )
 
