@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { NumbersOfQuestions } from '../_models/numbersOfQuestions';
+import { UserOptions } from '../_models/userOptions';
 import { TriviaService } from '../_services/trivia.service';
 
 @Component({
@@ -47,7 +48,11 @@ export class GameOptionsComponent implements OnInit {
     let level = this.optionsModel.controls['level'].value;
     let numberOfQuestions = this.optionsModel.controls['numberOfQuestions'].value;
 
-    let optionsModel: string[] = [id, level, numberOfQuestions];
+    let optionsModel: UserOptions = {
+      categoryId: id,
+      difficulty: level,
+      amount: numberOfQuestions
+    }
 
     this.triviaService.setUserOptions(optionsModel);
 

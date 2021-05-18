@@ -6,6 +6,7 @@ import { NumbersOfQuestions } from '../_models/numbersOfQuestions';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Question } from '../_models/question';
+import { UserOptions } from '../_models/userOptions';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import { Question } from '../_models/question';
 export class TriviaService {
   baseUrl = environment.baseUrl + 'trivia/';
   triviaCache = new Map();
-  options: string[]
+  options: UserOptions
 
   constructor(private http: HttpClient) { }
 
@@ -48,16 +49,16 @@ export class TriviaService {
     );
   }
 
-  getQuestions(categoryId: string, difficulty: string, amount: string) {
+  getQuestions() {
     let params = new HttpParams();
-    params = params.append('categoryId', categoryId);
-    params = params.append('difficulty', difficulty);
-    params = params.append('amount', amount);
+    params = params.append('categoryId', this.options.categoryId);
+    params = params.append('difficulty', this.options.difficulty.toLowerCase());
+    params = params.append('amount', this.options.amount);
 
     return this.http.get<Question[]>(this.baseUrl + 'questions', { params })
   }
 
-  setUserOptions(userOptions: string[]) {
+  setUserOptions(userOptions: UserOptions) {
     this.options = userOptions;
   }
 }

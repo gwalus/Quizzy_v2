@@ -20,11 +20,6 @@ export class GameComponent implements OnInit {
   }
 
   loadQuestions() {
-    let options = this.triviaService.options;
-    console.log(options)
-
-    console.log(options[0].toString())
-
     this.triviaService.getQuestions().subscribe(
       questions => {
         this.questions = questions
