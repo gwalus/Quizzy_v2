@@ -18,6 +18,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { HasRoleDirective } from './_directives/has-role.directive';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -30,7 +31,8 @@ export function createTranslateLoader(http: HttpClient) {
     FooterComponent,
     HomeComponent,
     GameComponent,
-    GameOptionsComponent
+    GameOptionsComponent,
+    HasRoleDirective
   ],
   imports: [
     BrowserModule,
