@@ -9,17 +9,6 @@
 
         <!-- Links -->
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item" *appHasRole='["Admin", "Moderator"]'>
-                <a class="nav-link waves-light" mdbWavesEffect>
-                    <button class="fas fa-users-cog" routerLink="/admin"></button> Admin panel
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link waves-light" mdbWavesEffect>
-                    <mdb-icon fas icon="users"></mdb-icon>Leaderboards
-                </a>
-            </li>
-
             <form *ngIf="(authService.currentUser$ | async) === null" #loginForm="ngForm"
                 class="form-inline mt-2 mt-md-0" (ngSubmit)="login()" autocomplete="off">
                 <input name="username" [(ngModel)]="model.email" class="form-control mr-sm-2" type="text"
@@ -28,6 +17,19 @@
                     placeholder="Password">
                 <button class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
             </form>
+
+            <ng-container *ngIf="authService.currentUser$ | async">
+                <li class="nav-item" *appHasRole='["Admin", "Moderator"]'>
+                    <a class="nav-link waves-light" routerLink="/admin" mdbWavesEffect>
+                        <button class="fas fa-users-cog"></button> Admin panel
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-light" mdbWavesEffect>
+                        <mdb-icon fas icon="users"></mdb-icon>Leaderboards
+                    </a>
+                </li>
+            </ng-container>
 
             <!-- Dropdown -->
             <li class="nav-item dropdown" dropdown *ngIf="(authService.currentUser$ | async) !== null">

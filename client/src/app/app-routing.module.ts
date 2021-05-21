@@ -4,11 +4,18 @@ import { AdminComponent } from './admin/admin.component';
 import { GameComponent } from './game/game.component';
 import { HomeComponent } from './home/home.component';
 import { AdminGuard } from './_guards/admin.guard';
+import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'game', component: GameComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] }
+  {
+    path: '',
+    component: HomeComponent,
+    runGuardsAndResolvers: 'always',
+    children: [
+      { path: 'game', component: GameComponent },
+      { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] }
+    ]
+  }
 ];
 
 @NgModule({

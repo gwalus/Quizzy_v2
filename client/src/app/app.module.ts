@@ -34,7 +34,7 @@ export function createTranslateLoader(http: HttpClient) {
     GameComponent,
     GameOptionsComponent,
     HasRoleDirective,
-    AdminComponent
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
