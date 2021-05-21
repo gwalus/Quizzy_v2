@@ -26,4 +26,9 @@ export class AuthService {
       })
     )
   }
+
+  setCurrentUser(user: any) {
+    localStorage.setItem('user', JSON.stringify(user));
+    this.currentUserSource.next(user);
+  }
 }
