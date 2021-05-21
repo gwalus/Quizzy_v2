@@ -13,9 +13,10 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     children: [
       { path: 'game', component: GameComponent },
-      { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] }
+
     ]
-  }
+  },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] }
 ];
 
 @NgModule({

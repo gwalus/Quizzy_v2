@@ -20,6 +20,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { HasRoleDirective } from './_directives/has-role.directive';
 import { AdminComponent } from './admin/admin.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -57,7 +58,8 @@ export function createTranslateLoader(http: HttpClient) {
       closeButton: true,
       positionClass: 'toast-bottom-right',
       progressBar: true
-    })
+    }),
+    TabsModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
