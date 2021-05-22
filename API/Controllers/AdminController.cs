@@ -14,11 +14,15 @@ namespace API.Controllers
         }
 
         [HttpGet("category")]
-        public async Task<ActionResult> AddCategory(string categoryName)
+        public async Task<ActionResult> AddCategory(string name)
         {
-            
+            if (await _questionService.CategoryExists(name))
+                return BadRequest("Category already exists");
 
+            if (await _questionService.AddCategory(name))
+                return Ok("Category has been added");
 
+            return BadRequest();
         }
     }
 }
