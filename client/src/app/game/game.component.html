@@ -1,12 +1,17 @@
 <div class="container" style="margin: 3% auto">
-    <div class="jumbotron" *ngIf="!endQuiz">
+    <div class="jumbotron" *ngIf="!endQuiz" style="padding: 1rem 4rem 2rem 4rem">
         <div class="mt-0">
-            <progressbar class="progress-striped active" [value]="progressBarValue" [type]="progressBarType">
-                {{progressBarValue}} s </progressbar>
+            <!-- <progressbar class="progress-striped active mb-2" [value]="progressBarValue" [type]="progressBarType">
+                {{progressBarValue}} s </progressbar> -->
 
             <div class="row text-right">
                 <h3 class="display-5">{{currentQuestion?.category}}</h3>
                 <p class="font-italic">{{currentQuestion?.difficulty}}</p>
+            </div>
+
+            <div class="row text-left">
+                <span class="font-italic" style="font-size: 2rem;">Question {{currentQuestionNumber +
+                    1}}/{{questions.length}}</span>
             </div>
 
             <hr class="my-2">
@@ -51,6 +56,9 @@
                     </div>
                 </div>
             </div>
+
+            <progressbar class="progress-striped active mt-5" [value]="progressBarValue" [type]="progressBarType">
+                {{progressBarValue}} s </progressbar>
         </div>
     </div>
 

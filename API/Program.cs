@@ -5,6 +5,7 @@ using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -22,7 +23,11 @@ namespace API
             try
             {
                 var context = services.GetRequiredService<QuizContext>();
+
+                await context.Database.MigrateAsync();
+
                 var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+                var userManager = services.GetRequiredService<UserManager<AppUser>>();
 
                 var roles = new List<AppRole>{
                     new AppRole{Name="Admin"},
@@ -37,6 +42,14 @@ namespace API
 
                     await roleManager.CreateAsync(role);
                 }
+
+                var admin = new AppUser
+                {
+                    UserName = "admin"
+                };
+
+                await userManager.CreateAsync(admin, "Pa$$w0rd");
+                await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });
 
                 await host.RunAsync();
             }

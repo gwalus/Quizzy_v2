@@ -49,9 +49,10 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AppUserDto>> DefaultRegister(UserDefaultLoginDto userDefaultLoginDto)
+        public async Task<ActionResult<AppUserDto>> DefaultLogin(UserDefaultLoginDto userDefaultLoginDto)
         {
             var user = await _userManager.FindByEmailAsync(userDefaultLoginDto.Email);
+            if (user == null) user = await _userManager.FindByNameAsync(userDefaultLoginDto.Email);
 
             if (user != null && await _userManager.CheckPasswordAsync(user, userDefaultLoginDto.Password))
             {

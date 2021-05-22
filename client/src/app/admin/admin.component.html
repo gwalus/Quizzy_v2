@@ -1,0 +1,59 @@
+<div class="container" style="margin: 3% auto;">
+
+    <div class="jumbotron">
+        <h1 class="display-5">Admin panel</h1>
+
+        <hr class="my-4">
+
+        <div>
+            <tabset>
+                <tab heading="Add category">
+                    <form class="mt-2" [formGroup]="categoryForm" style="padding: 10px 0">
+                        <label class="mr-2">Category name: </label>
+                        <input type="text" class="form-control-inline mr-2" placeholder="Category"
+                            formControlName="category">
+                        <button class="btn btn-secondary" type="submit" (click)="addCategory()"
+                            [disabled]="!categoryForm.valid">Add</button>
+
+                    </form>
+                </tab>
+                <tab heading="Add questions">
+                    <form [formGroup]="questionForm" (ngSubmit)="addQuestion()">
+                        <label class="mt-2">Category:</label>
+                        <input formControlName="name" class="form-control" placeholder="Category" />
+
+                        <label class="mt-2">Question</label>
+                        <input type="text" class="form-control" placeholder="Question" formControlName="question">
+
+                        <label class="mt-2">Correct answer:</label>
+                        <input type="text" class="form-control" placeholder="Correct answer"
+                            formControlName="correctAnswer">
+
+                        <div formArrayName="incorrectAnswers">
+                            <div *ngFor="let item of answers.controls; let pointIndex=index"
+                                [formGroupName]="pointIndex">
+
+                                <label class="mr-2">Incorrect answers</label>
+                                <input type="text" class="form-control mr-2" placeholder="answer"
+                                    formControlName="answer" />
+
+                                <button type="button" class="btn btn-outline-danger m-2"
+                                    (click)="deleteIncorrectAnswer(pointIndex)">X</button>
+
+                            </div>
+                            <button type="button" class="btn btn-outline-success"
+                                (click)="addIncorrectAnswer()">Add</button>
+                        </div>
+
+                        <div class="float-sm-right">
+                            <button type="submit" class="btn btn-outline-secondary">Add question</button>
+                        </div>
+
+                    </form>
+
+                    {{ this.questionForm.value | json }}
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</div>

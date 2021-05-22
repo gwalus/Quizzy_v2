@@ -13,11 +13,14 @@ import { GameComponent } from './game/game.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { GameOptionsComponent } from './game-options/game-options.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { HasRoleDirective } from './_directives/has-role.directive';
+import { AdminComponent } from './admin/admin.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -30,13 +33,16 @@ export function createTranslateLoader(http: HttpClient) {
     FooterComponent,
     HomeComponent,
     GameComponent,
-    GameOptionsComponent
+    GameOptionsComponent,
+    HasRoleDirective,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     ProgressbarModule.forRoot(),
     TranslateModule.forRoot({
@@ -52,7 +58,8 @@ export function createTranslateLoader(http: HttpClient) {
       closeButton: true,
       positionClass: 'toast-bottom-right',
       progressBar: true
-    })
+    }),
+    TabsModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

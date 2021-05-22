@@ -11,5 +11,9 @@ namespace API.Data
         public QuizContext(DbContextOptions options) : base(options)
         {
         }
+
+        public DbSet<CustomCategory> CustomCategories { get; set; }
+        public DbSet<CustomQuestion> CustomQuestions { get; set; }
+        public DbSet<CustomIncorrectAnswer> CustomIncorrectAnswers { get; set; }
     }
 }
