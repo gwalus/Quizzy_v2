@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace API.Entities
 {
     public class CustomQuestion
@@ -5,6 +7,6 @@ namespace API.Entities
         public int Id { get; set; }
         public string Question { get; set; }
         public string CorrectAnswer { get; set; }
-        public string[] IncorrectAnswers { get; set; }
+        public ICollection<CustomIncorrectAnswer> IncorrectAnswers { get; set; }
     }
 }
