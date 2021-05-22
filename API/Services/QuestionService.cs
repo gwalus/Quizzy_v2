@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Data;
 using API.Dtos;
@@ -17,7 +18,24 @@ namespace API.Services
 
         public async Task<bool> AddQuestion(QuestionToAdd questionModel)
         {
-            return true;
+            var category = await _context.CustomCategories.FirstOrDefaultAsync(c => c.Name == questionModel.Name);
+
+            var question = new CustomQuestion
+            {
+                CategoryId = category,
+                CategoryName = questionModel.Name,
+                Question = questionModel.Question,
+                CorrectAnswer = questionModel.CorrectAnswer,
+                IncorrectAnswers = new List<CustomIncorrectAnswer>()
+            };
+
+            foreach (var incorrectAnswer in questionModel.IncorrectAnswers)
+            {
+                question.IncorrectAnswers.Add(new CustomIncorrectAnswer { IncorrectAnswer = incorrectAnswer });
+            }
+
+            await _context.CustomQuestions.AddAsync(question);
+            return (await _context.SaveChangesAsync() > 0);
         }
 
         public async Task<bool> AddCategory(string category)
