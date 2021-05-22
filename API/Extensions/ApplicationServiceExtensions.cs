@@ -15,6 +15,7 @@ namespace API.Extensions
         {
             services.AddScoped<ITriviaService, TriviaService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IQuestionService, QuestionService>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<QuizContext>(options =>
             {

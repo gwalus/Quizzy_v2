@@ -5,7 +5,8 @@ namespace API.Interfaces
 {
     public interface IQuestionService
     {
-        Task<bool> AddCategory(QuestionToAdd questionModel);
+        Task<bool> AddQuestion(QuestionToAdd questionModel);
         Task<bool> AddCategory(string category);
+        Task<bool> CategoryExists(string category);
     }
 }
