@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace API.Dtos
 {
-    public class CategoryToAdd
+    public class QuestionToAdd
     {
         public string Name { get; set; }
         public string CorrectAnswer { get; set; }
