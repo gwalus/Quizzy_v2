@@ -1,6 +1,6 @@
-export interface CustomQuestion {
+export class CustomQuestion {
     name: string;
     question: string;
     correctAnswer: string;
-    incorrectAnswers: string[];
+    incorrectAnswers: string[] = [];
 }

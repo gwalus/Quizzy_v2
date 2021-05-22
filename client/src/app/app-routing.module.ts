@@ -10,12 +10,9 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    runGuardsAndResolvers: 'always',
-    children: [
-      { path: 'game', component: GameComponent },
-
-    ]
+    runGuardsAndResolvers: 'always'
   },
+  { path: 'game', component: GameComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] }
 ];
 

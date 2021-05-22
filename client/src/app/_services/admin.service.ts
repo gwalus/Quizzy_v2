@@ -16,6 +16,6 @@ export class AdminService {
   }
 
   addQuestion(question: CustomQuestion) {
-    return this.http.post(this.baseUrl + 'question', { question });
+    return this.http.post(this.baseUrl + 'question', question);
   }
 }
