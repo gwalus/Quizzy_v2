@@ -13,7 +13,7 @@ namespace API.Controllers
             _questionService = questionService;
         }
 
-        [HttpGet("category")]
+        [HttpPost("category")]
         public async Task<ActionResult> AddCategory(string name)
         {
             if (await _questionService.CategoryExists(name))
