@@ -65,6 +65,7 @@ namespace API.Services
                 .Select(x => new QuestionDto
                 {
                     QuestionId = x.Id,
+                    Category = x.CategoryName,
                     Question = x.Question,
                     Answers = x.IncorrectAnswers.Select(y => y.IncorrectAnswer).ToList()
                 })
