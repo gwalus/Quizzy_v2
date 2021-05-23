@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -14,7 +15,7 @@ export class AuthService {
   // przechowujemy tylko jedno
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   register(model: User) {
     return this.http.post(this.baseUrl + 'register', model).pipe(
@@ -51,6 +52,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+    this.router.navigateByUrl('');
   }
 
   getDecodedToken(token: string) {

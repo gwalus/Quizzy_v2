@@ -1,22 +1,22 @@
-<div class="container" style="margin: 1% auto;" *ngIf="!loading">
+<div class="container" style="margin: 1% auto" *ngIf="!loading">
     <div class="progress">
         <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar"
             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
     </div>
-    <div class="jumbotron" style="padding: 2% 4%;">
+    <div class="jumbotron" style="padding: 3% 8% 1% 8%;">
         <h1 class="display-3">Welcome in Quizzy</h1>
         <p class="lead">This application checks knowledge from different categories.</p>
         <hr class="my-2">
 
         <div class="category-inline">
-            <button class="flex-item btn btn-outline-{{getRandomBtnColor(i)}}" style="border: 2px solid;"
-                *ngFor="let category of categories; let i = index;"
+            <button class="flex-item btn btn-outline-{{getRandomBtnColor(i)}}"
+                style="border: 2px solid; font-size: 18px;" *ngFor="let category of categories; let i = index;"
                 (click)="chooseCategory(category.id)">{{category.name}}</button>
         </div>
 
 
-        <div class="text-center m-3 h3">
-            <p class="d-inline-block ">If you want to test your knowledge, click let's play.</p>
+        <div class="text-left m-3 h3">
+            <p class="d-inline-block">If you want to test your knowledge, click let's play.</p>
             <button type="button" class="btn btn-secondary btn-md ml-2 p-2" (click)="openModalWithGameOptions()">Let's
                 play!</button>
         </div>
@@ -29,7 +29,7 @@
                     (click)="chooseCategoryFromDatabase(category.id)">{{category.name}}</button>
             </div>
 
-            <div class="text-center m-3 h3">
+            <div class="text-left m-3 h3">
                 <p class="d-inline-block">Try it with custom categories</p>
                 <button type="button" class="btn btn-secondary btn-md ml-2 p-2"
                     (click)="startWithCustomCategory()">Let's
