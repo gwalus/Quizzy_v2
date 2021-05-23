@@ -12,6 +12,7 @@ import { QuestionDb } from '../_models/questionDb';
 export class QuestionService {
   baseUrl = environment.baseUrl + 'questions';
   questionCache = new Map();
+  choosedCategory: string;
 
   constructor(private http: HttpClient) { }
 
@@ -31,5 +32,9 @@ export class QuestionService {
 
   getQuestion(categoryId: string) {
     return this.http.get<QuestionDb>(this.baseUrl + '?categoryId=' + categoryId);
+  }
+
+  setCategory(categoryId: string) {
+    this.choosedCategory = categoryId;
   }
 }

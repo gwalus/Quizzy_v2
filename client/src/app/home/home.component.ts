@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { GameOptionsComponent } from '../game-options/game-options.component';
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
   bsModalRef: BsModalRef;
 
   constructor(private triviaService: TriviaService, private toastr: ToastrService, private modalService: BsModalService,
-    private questionService: QuestionService) {
+    private questionService: QuestionService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -78,10 +79,11 @@ export class HomeComponent implements OnInit {
 
   startWithCustomCategory() {
     if (this.choosedCategoryFromDatabase) {
-      this.questionService.getQuestion(this.choosedCategoryFromDatabase).subscribe(response => {
-        this.questionFromDatabase = response as QuestionDb;
-        console.log(response);
-      })
+      this.router.navigateByUrl('/custom-game');
+      // this.questionService.getQuestion(this.choosedCategoryFromDatabase).subscribe(response => {
+      //   this.questionFromDatabase = response as QuestionDb;
+      //   console.log(response);
+      // })
     }
     else this.toastr.error('You have not selected any category.');
   }
