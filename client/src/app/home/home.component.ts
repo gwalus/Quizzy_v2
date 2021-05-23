@@ -80,10 +80,7 @@ export class HomeComponent implements OnInit {
   startWithCustomCategory() {
     if (this.choosedCategoryFromDatabase) {
       this.router.navigateByUrl('/custom-game');
-      // this.questionService.getQuestion(this.choosedCategoryFromDatabase).subscribe(response => {
-      //   this.questionFromDatabase = response as QuestionDb;
-      //   console.log(response);
-      // })
+      this.questionService.setCategory(this.choosedCategoryFromDatabase);
     }
     else this.toastr.error('You have not selected any category.');
   }

@@ -30,8 +30,8 @@ export class QuestionService {
     );
   }
 
-  getQuestion(categoryId: string) {
-    return this.http.get<QuestionDb>(this.baseUrl + '?categoryId=' + categoryId);
+  getQuestion() {
+    return this.http.get<QuestionDb>(this.baseUrl + '?categoryId=' + this.choosedCategory);
   }
 
   setCategory(categoryId: string) {
