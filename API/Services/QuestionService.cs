@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.Dtos;
@@ -47,6 +48,11 @@ namespace API.Services
         public async Task<bool> CategoryExists(string category)
         {
             return await _context.CustomCategories.AnyAsync(c => c.Name == category);
+        }
+
+        public async Task<IList<string>> GetCategories()
+        {
+            return await _context.CustomCategories.Select(c => c.Name).ToListAsync();
         }
     }
 }
