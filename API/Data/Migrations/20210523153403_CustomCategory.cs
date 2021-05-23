@@ -29,14 +29,14 @@ namespace API.Data.Migrations
                     Question = table.Column<string>(type: "text", nullable: true),
                     CorrectAnswer = table.Column<string>(type: "text", nullable: true),
                     CategoryName = table.Column<string>(type: "text", nullable: true),
-                    CategoryIdId = table.Column<int>(type: "integer", nullable: true)
+                    CategoryId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CustomQuestions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CustomQuestions_CustomCategories_CategoryIdId",
-                        column: x => x.CategoryIdId,
+                        name: "FK_CustomQuestions_CustomCategories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "CustomCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -68,9 +68,9 @@ namespace API.Data.Migrations
                 column: "CustomQuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomQuestions_CategoryIdId",
+                name: "IX_CustomQuestions_CategoryId",
                 table: "CustomQuestions",
-                column: "CategoryIdId");
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -19,5 +19,16 @@ namespace API.Controllers
         {
             return await _questionService.GetCategories();
         }
+
+        [HttpGet("question")]
+        public async Task<ActionResult> GetQuestion(int categoryId)
+        {
+            var question = await _questionService.GetQuestionForCategory(categoryId);
+
+            if (question == null)
+                return NotFound();
+
+            return Ok(question);
+        }
     }
 }

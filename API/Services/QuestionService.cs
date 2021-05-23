@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace API.Services
 
             var question = new CustomQuestion
             {
-                CategoryId = category,
+                Category = category,
                 CategoryName = questionModel.Name,
                 Question = questionModel.Question,
                 CorrectAnswer = questionModel.CorrectAnswer,
@@ -53,6 +54,32 @@ namespace API.Services
         public async Task<IList<CustomCategoryDto>> GetCategories()
         {
             return await _context.CustomCategories.Select(x => new CustomCategoryDto { Id = x.Id, Name = x.Name }).ToListAsync();
+        }
+
+        public async Task<QuestionDto> GetQuestionForCategory(int categoryId)
+        {
+            var question = await _context.CustomQuestions
+                .FromSqlRaw("SELECT * FROM \"CustomQuestions\" ORDER BY RANDOM()")
+                .Where(x => x.Category.Id == categoryId)
+                .Include(x => x.IncorrectAnswers)
+                .Select(x => new QuestionDto
+                {
+                    QuestionId = x.Id,
+                    Question = x.Question,
+                    Answers = x.IncorrectAnswers.Select(y => y.IncorrectAnswer).ToList()
+                })
+                .FirstOrDefaultAsync();
+
+            if(question != null)
+            {
+                var correctAnswer = await _context.CustomQuestions.Where(x => x.Id == question.QuestionId).Select(x => x.CorrectAnswer).FirstOrDefaultAsync();
+
+                question.Answers.Add(correctAnswer);
+
+                question.Answers.OrderBy(_ => Guid.NewGuid());
+            }
+            
+            return question;
         }
     }
 }

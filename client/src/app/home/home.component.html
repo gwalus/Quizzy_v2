@@ -24,7 +24,8 @@
         <ng-container *ngIf="categoriesFromDatabase.length > 0">
             <hr class="my-2">
             <div class="category-inline">
-                <button class="flex-item btn btn-outline-{{getRandomBtnColor(i)}}" style="border: 2px solid;"
+                <button class="flex-item btn btn-outline-{{getRandomBtnColor(i)}}"
+                    style="border: 2px solid; font-size: 18px;"
                     *ngFor="let category of categoriesFromDatabase; let i = index;"
                     (click)="chooseCategoryFromDatabase(category.id)">{{category.name}}</button>
             </div>
