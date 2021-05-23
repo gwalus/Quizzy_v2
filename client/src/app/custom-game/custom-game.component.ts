@@ -30,9 +30,10 @@ export class CustomGameComponent implements OnInit {
   }
 
   checkAnswer(categoryId: string, userAnswer: string, index: number) {
-
-
     this.questionService.checkAnswer(categoryId, userAnswer).subscribe(response => {
+      console.log(response);
+      console.log(categoryId)
+      console.log(userAnswer)
       if (response === 'Good answer') {
         this.setAnswerBorders(index, 'success');
       } else {

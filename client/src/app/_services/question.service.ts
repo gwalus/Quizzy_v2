@@ -33,6 +33,6 @@ export class QuestionService {
   }
 
   checkAnswer(categoryId: string, userAnswer: string) {
-    return this.http.get<string>(this.baseUrl + '/check-answer?categoryId=' + categoryId + '&userAnswer=' + userAnswer);
+    return this.http.get<string>(this.baseUrl + '/check-answer?questionId=' + categoryId + '&userAnswer=' + userAnswer);
   }
 }

@@ -33,9 +33,9 @@ namespace API.Controllers
         }
 
         [HttpGet("check-answer")]
-        public async Task<string> CheckAnswer(int categoryId, string userAnswer)
+        public async Task<string> CheckAnswer([FromBody] int questionId, string userAnswer)
         {
-            if (await _questionService.CheckAnswer(categoryId, userAnswer))
+            if (await _questionService.CheckAnswer(questionId, userAnswer))
                 return JsonSerializer.Serialize("Good answer");
 
             return JsonSerializer.Serialize("Incorrect");

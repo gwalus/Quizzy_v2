@@ -12,7 +12,8 @@
                             <label>Category name: </label>
                             <input type="text" class="form-control" placeholder="Category" formControlName="category">
 
-                            <div *ngIf="categoryForm?.invalid" class="alert alert-danger">
+                            <div *ngIf="categoryForm?.invalid && (categoryForm?.dirty || categoryForm?.touched)"
+                                class="alert alert-danger">
                                 Question is required and minimum lenght must be at least 4.
                             </div>
 
@@ -73,7 +74,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="incorrectAnswersControl?.invalid" class="alert alert-danger">
+                                <div *ngIf="incorrectAnswersControl?.invalid && (incorrectAnswersControl?.dirty || incorrectAnswersControl?.touched)"
+                                    class="alert alert-danger">
                                     You must enter at least one incorrect answer.
                                 </div>
                                 <button type="button" class="btn btn-outline-success"
