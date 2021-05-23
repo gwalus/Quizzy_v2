@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   ];
   randomTypes: string[] = [];
   choosedCategory?: string;
+  choosedCategoryFromDatabase?: string;
   loading = false;
 
   bsModalRef: BsModalRef;
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.triviaService.getCategories().subscribe(response => {
       this.categories = response as Category[];
-      this.loading = !this.loading;
+
     });
   }
 
@@ -49,10 +50,8 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  getRandomBtnColor(num: string) {
-    let temp = Number.parseInt(num);
-    temp -= 9;
-    return this.randomTypes[temp];
+  getRandomBtnColor(num: number) {
+    return this.randomTypes[num];
   }
 
   createRandomColorsTable() {
@@ -67,6 +66,15 @@ export class HomeComponent implements OnInit {
 
   chooseCategory(categoryId: string) {
     this.choosedCategory = categoryId;
+  }
+
+  chooseCategoryFromDatabase(categoryId: string) {
+    this.choosedCategoryFromDatabase = categoryId;
+    console.log(this.choosedCategoryFromDatabase);
+  }
+
+  startWithCustomCategory() {
+    console.log('start');
   }
 
   openModalWithGameOptions() {
