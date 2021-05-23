@@ -11,5 +11,6 @@ namespace API.Interfaces
         Task<bool> CategoryExists(string category);
         Task<IList<CustomCategoryDto>> GetCategories();
         Task<QuestionDto> GetQuestionForCategory(int categoryId);
+        Task<bool> CheckAnswer(int questionId, string userAnswer);
     }
 }

@@ -71,7 +71,7 @@ namespace API.Services
                 })
                 .FirstOrDefaultAsync();
 
-            if(question != null)
+            if (question != null)
             {
                 var correctAnswer = await _context.CustomQuestions.Where(x => x.Id == question.QuestionId).Select(x => x.CorrectAnswer).FirstOrDefaultAsync();
 
@@ -79,8 +79,18 @@ namespace API.Services
 
                 question.Answers.OrderBy(_ => Guid.NewGuid());
             }
-            
+
             return question;
+        }
+
+        public async Task<bool> CheckAnswer(int questionId, string userAnswer)
+        {
+            string correctAnswer = await _context.CustomQuestions
+                .Where(x => x.Id == questionId)
+                .Select(x => x.CorrectAnswer)
+                .FirstOrDefaultAsync();
+
+            return correctAnswer == userAnswer;
         }
     }
 }
