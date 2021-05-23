@@ -48,6 +48,7 @@ export class AdminComponent implements OnInit {
     this.questionService.getCategories().pipe(
       map((response: Category[]) => {
         const categories = response;
+        this.categories = [];
         this.categories = categories.map(x => x.name);
       })
     ).subscribe()
@@ -72,13 +73,13 @@ export class AdminComponent implements OnInit {
     this.answers.removeAt(index);
   }
 
-
   addCategory() {
     let category = this.categoryForm.controls['category'].value;
 
     this.adminService.addCategory(category).subscribe(response => {
       this.toastr.success(response);
       this.categoryForm.reset();
+      this.getCategories();
     }, error => {
       this.toastr.error(error.error);
       this.categoryForm.reset();
