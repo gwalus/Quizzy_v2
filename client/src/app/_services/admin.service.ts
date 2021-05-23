@@ -12,7 +12,7 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   addCategory(name: string) {
-    return this.http.post(this.baseUrl + 'category?name=' + name, {});
+    return this.http.post<string>(this.baseUrl + 'category?name=' + name, {});
   }
 
   addQuestion(question: CustomQuestion) {

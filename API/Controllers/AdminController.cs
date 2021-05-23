@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Interfaces;
@@ -18,10 +19,10 @@ namespace API.Controllers
         public async Task<ActionResult> AddCategory(string name)
         {
             if (await _questionService.CategoryExists(name))
-                return BadRequest("Category already exists");
+                return BadRequest(JsonSerializer.Serialize("Category already exists"));
 
             if (await _questionService.AddCategory(name))
-                return Ok("Category has been added");
+                return Ok(JsonSerializer.Serialize("Category has been added"));
 
             return BadRequest();
         }

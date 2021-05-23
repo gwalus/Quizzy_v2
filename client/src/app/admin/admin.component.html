@@ -1,20 +1,29 @@
-<div class="container" style="margin: 3% auto;">
+<div class="container" style="margin: 3% auto; font-size: 1.2rem;">
 
     <div class="jumbotron">
         <h1 class="display-5">Admin panel</h1>
-
         <hr class="my-4">
 
         <div>
             <tabset>
                 <tab heading="Add category">
                     <form class="mt-2" [formGroup]="categoryForm" style="padding: 10px 0">
-                        <label class="mr-2">Category name: </label>
-                        <input type="text" class="form-control-inline mr-2" placeholder="Category"
-                            formControlName="category">
-                        <button class="btn btn-secondary" type="submit" (click)="addCategory()"
-                            [disabled]="!categoryForm.valid">Add</button>
+                        <div class="form-group form-control-inline">
+                            <label class="mr-2" for="inputValid">Category name: </label>
+                            <input type="text" class="form-control-inline mr-2 is-invalid " id="inputInvalid"
+                                placeholder="Category" formControlName="category" required>
 
+                            <button class="btn btn-secondary inline" type="submit" (click)="addCategory()"
+                                [disabled]="!categoryForm.valid">Add</button>
+
+                            <div *ngIf="categoryForm.get('category')?.hasError('required')" class="invalid-feedback">
+                                Category name is required!
+                            </div>
+
+                            <div *ngIf="categoryForm.get('category')?.hasError('minlength')" class="invalid-feedback">
+                                Category name must have minimum 4 characters!
+                            </div>
+                        </div>
                     </form>
                 </tab>
                 <tab heading="Add questions">

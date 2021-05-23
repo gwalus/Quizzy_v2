@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryForm = this.fb.group({
-      category: ['', Validators.required]
+      category: ['', [Validators.required, Validators.minLength(4)]]
     });
 
     this.questionForm = this.fb.group({
@@ -47,8 +47,13 @@ export class AdminComponent implements OnInit {
   addCategory() {
     let category = this.categoryForm.controls['category'].value;
 
-    this.adminService.addCategory(category).subscribe(() =>
-      this.toastr.success('Success'))
+    this.adminService.addCategory(category).subscribe(response => {
+      this.toastr.success(response);
+      this.categoryForm.reset();
+    }, error => {
+      this.toastr.error(error.error);
+      this.categoryForm.reset();
+    })
   }
 
   addQuestion() {
