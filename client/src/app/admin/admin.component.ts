@@ -2,8 +2,11 @@ import { ArrayType } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs/operators';
+import { Category } from '../_models/category';
 import { CustomQuestion } from '../_models/customQuestion';
 import { AdminService } from '../_services/admin.service';
+import { QuestionService } from '../_services/question.service';
 
 @Component({
   selector: 'app-admin',
@@ -14,41 +17,72 @@ export class AdminComponent implements OnInit {
   categoryForm: FormGroup;
   questionForm: FormGroup;
   question: CustomQuestion = new CustomQuestion();
+  categories: string[];
 
-  constructor(private fb: FormBuilder, private adminService: AdminService, private toastr: ToastrService) { }
+  constructor(private fb: FormBuilder, private adminService: AdminService, private toastr: ToastrService, private questionService: QuestionService) { }
 
   ngOnInit(): void {
+    this.getCategories();
+
     this.categoryForm = this.fb.group({
-      category: ['', Validators.required]
+      category: ['', [Validators.required, Validators.minLength(3)]]
     });
 
     this.questionForm = this.fb.group({
-      name: [],
-      question: [],
-      correctAnswer: [],
-      incorrectAnswers: this.fb.array([this.fb.group({ answer: '' })])
+      name: ['', Validators.required],
+      question: ['', Validators.required],
+      correctAnswer: ['', Validators.required],
+      incorrectAnswers: this.fb.array([], Validators.required)
     });
 
+    this.addIncorrectAnswer();
+  }
+
+  get questionControl() { return this.questionForm.get('question'); }
+
+  get correctAnswerControl() { return this.questionForm.get('correctAnswer'); }
+
+  get incorrectAnswersControl() { return this.questionForm.get('incorrectAnswers'); }
+
+  getCategories() {
+    this.questionService.getCategories().pipe(
+      map((response: Category[]) => {
+        const categories = response;
+        this.categories = [];
+        this.categories = categories.map(x => x.name);
+      })
+    ).subscribe()
   }
 
   get answers() {
     return this.questionForm.get('incorrectAnswers') as FormArray;
   }
 
+  newIncorrectAnswer(): FormGroup {
+    return this.fb.group({
+      answer: ['', Validators.required]
+    })
+  }
+
   addIncorrectAnswer() {
-    this.answers.push(this.fb.group({ answer: '' }));
+    this.answers.push(this.newIncorrectAnswer());
   }
 
   deleteIncorrectAnswer(index: number) {
     this.answers.removeAt(index);
   }
 
-
   addCategory() {
     let category = this.categoryForm.controls['category'].value;
 
-    this.adminService.addCategory(category).subscribe(() =>
-      this.toastr.success('Success'))
+    this.adminService.addCategory(category).subscribe(response => {
+      this.toastr.success(response);
+      this.categoryForm.reset();
+      this.getCategories();
+    }, error => {
+      this.toastr.error(error.error);
+      this.categoryForm.reset();
+    })
   }
 
   addQuestion() {
@@ -67,12 +101,11 @@ export class AdminComponent implements OnInit {
 
     question.incorrectAnswers = incorrectAnswers;
 
-    this.adminService.addQuestion(question).subscribe((res) => {
-      this.toastr.success('Added')
-      console.log(res);
-    }, error => {
-      this.toastr.error('Error');
-      console.log(error);
+    this.adminService.addQuestion(question).subscribe(response => {
+      this.toastr.success(response)
+      this.questionForm.reset();
+    }, () => {
+      this.toastr.error('Cannot add question.');
     })
   }
 }

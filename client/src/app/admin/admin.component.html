@@ -1,57 +1,96 @@
-<div class="container" style="margin: 3% auto;">
+<div class="container" style="margin: 3% auto; font-size: 1.2rem;">
 
     <div class="jumbotron">
         <h1 class="display-5">Admin panel</h1>
-
         <hr class="my-4">
 
         <div>
             <tabset>
                 <tab heading="Add category">
-                    <form class="mt-2" [formGroup]="categoryForm" style="padding: 10px 0">
-                        <label class="mr-2">Category name: </label>
-                        <input type="text" class="form-control-inline mr-2" placeholder="Category"
-                            formControlName="category">
-                        <button class="btn btn-secondary" type="submit" (click)="addCategory()"
-                            [disabled]="!categoryForm.valid">Add</button>
+                    <form class="mt-4" [formGroup]="categoryForm" style="margin-top: 20px;" (ngSubmit)="addCategory()">
+                        <div class="form-group form-control p-5">
+                            <label>Category name: </label>
+                            <input type="text" class="form-control" placeholder="Category" formControlName="category">
 
+                            <div *ngIf="categoryForm?.invalid && (categoryForm?.dirty || categoryForm?.touched)"
+                                class="alert alert-danger">
+                                Question is required and minimum lenght must be at least 3.
+                            </div>
+
+                            <div class="float-right">
+                                <button type="submit" class="btn btn-secondary mt-2 p-3"
+                                    [disabled]="!categoryForm.valid">ADD CATEGORY</button>
+                            </div>
+                        </div>
+                        <!-- <p>Form value: {{categoryForm.value | json}}</p>
+                        <p>Form status: {{categoryForm.status | json}}</p> -->
                     </form>
                 </tab>
                 <tab heading="Add questions">
-                    <form [formGroup]="questionForm" (ngSubmit)="addQuestion()">
-                        <label class="mt-2">Category:</label>
-                        <input formControlName="name" class="form-control" placeholder="Category" />
+                    <form [formGroup]="questionForm" (ngSubmit)="addQuestion()" style="margin-top: 20px;">
+                        <div class="form-group form-control p-5">
+                            <label class="mt-2">Category:</label>
+                            <select formControlName="name" class="form-control">
+                                <option value="null" disabled="true" [selected]="true">Choose from existed categories...
+                                </option>
+                                <option *ngFor="let category of categories" required>{{category}}</option>
+                            </select>
 
-                        <label class="mt-2">Question</label>
-                        <input type="text" class="form-control" placeholder="Question" formControlName="question">
+                            <label class="mt-2">Question</label>
+                            <input type="text" class="form-control" placeholder="Question" formControlName="question"
+                                required>
 
-                        <label class="mt-2">Correct answer:</label>
-                        <input type="text" class="form-control" placeholder="Correct answer"
-                            formControlName="correctAnswer">
+                            <div *ngIf="questionControl?.invalid && (questionControl?.dirty || questionControl?.touched)"
+                                class="alert alert-danger">
 
-                        <div formArrayName="incorrectAnswers">
-                            <div *ngFor="let item of answers.controls; let pointIndex=index"
-                                [formGroupName]="pointIndex">
-
-                                <label class="mr-2">Incorrect answers</label>
-                                <input type="text" class="form-control mr-2" placeholder="answer"
-                                    formControlName="answer" />
-
-                                <button type="button" class="btn btn-outline-danger m-2"
-                                    (click)="deleteIncorrectAnswer(pointIndex)">X</button>
-
+                                <div *ngIf="questionControl?.errors?.required">
+                                    Question is required.
+                                </div>
                             </div>
-                            <button type="button" class="btn btn-outline-success"
-                                (click)="addIncorrectAnswer()">Add</button>
-                        </div>
 
-                        <div class="float-sm-right">
-                            <button type="submit" class="btn btn-outline-secondary">Add question</button>
-                        </div>
+                            <label class="mt-2">Correct answer:</label>
+                            <input type="text" class="form-control" placeholder="Correct answer"
+                                formControlName="correctAnswer">
 
+                            <div *ngIf="correctAnswerControl?.invalid && (correctAnswerControl?.dirty || correctAnswerControl?.touched)"
+                                class="alert alert-danger">
+
+                                <div *ngIf="correctAnswerControl?.errors?.required">
+                                    Correct answer is required.
+                                </div>
+                            </div>
+
+                            <div formArrayName="incorrectAnswers">
+                                <label class="mr-2">Incorrect answers</label>
+                                <div *ngFor="let item of answers.controls; let pointIndex=index"
+                                    [formGroupName]="pointIndex">
+
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control mr-2" placeholder="Incorrect answer"
+                                            formControlName="answer" />
+                                        <div class="input-group-prepend">
+                                            <button type="button" class="btn btn-outline-danger m-2"
+                                                (click)="deleteIncorrectAnswer(pointIndex)">X</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="incorrectAnswersControl?.invalid && (incorrectAnswersControl?.dirty || incorrectAnswersControl?.touched)"
+                                    class="alert alert-danger">
+                                    You must enter at least one incorrect answer.
+                                </div>
+                                <button type="button" class="btn btn-outline-success"
+                                    (click)="addIncorrectAnswer()">+</button>
+                            </div>
+
+                            <div class="float-right">
+                                <button type="submit" class="btn btn-secondary p-3" [disabled]="!questionForm.valid">ADD
+                                    QUESTION</button>
+                            </div>
+                        </div>
                     </form>
 
-                    {{ this.questionForm.value | json }}
+                    <!-- <p>Form value: {{questionForm.value | json}}</p>
+                    <p>Form status: {{questionForm.status | json}}</p> -->
                 </tab>
             </tabset>
         </div>

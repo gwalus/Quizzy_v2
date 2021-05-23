@@ -1,8 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { AnswerModel } from '../_models/answerModel';
 import { Category } from '../_models/category';
 import { QuestionDb } from '../_models/questionDb';
 
@@ -17,17 +16,7 @@ export class QuestionService {
   constructor(private http: HttpClient) { }
 
   getCategories() {
-    let response = this.questionCache.get('categories');
-    if (response) {
-      return of(response);
-    }
-
-    return this.http.get<Category[]>(this.baseUrl + '/categories').pipe(
-      map(response => {
-        this.questionCache.set('categories', response);
-        return response;
-      })
-    );
+    return this.http.get<Category[]>(this.baseUrl + '/categories');
   }
 
   getQuestion() {
@@ -38,7 +27,11 @@ export class QuestionService {
     this.choosedCategory = categoryId;
   }
 
-  checkAnswer(categoryId: string, userAnswer: string) {
-    return this.http.get<string>(this.baseUrl + '/check-answer?categoryId=' + categoryId + '&userAnswer=' + userAnswer);
+  checkAnswer(questionId: string, userAnswer: string) {
+    let answerModel: AnswerModel = new AnswerModel();
+    answerModel.questionId = questionId;
+    answerModel.userAnswer = userAnswer;
+
+    return this.http.post<string>(this.baseUrl + '/check-answer', answerModel);
   }
 }
