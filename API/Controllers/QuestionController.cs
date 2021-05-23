@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.Dtos;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,7 @@ namespace API.Controllers
         }
 
         [HttpGet("categories")]
-        public async Task<IList<string>> GetCategories()
+        public async Task<IList<CustomCategoryDto>> GetCategories()
         {
             return await _questionService.GetCategories();
         }

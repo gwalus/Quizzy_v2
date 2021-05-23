@@ -50,9 +50,9 @@ namespace API.Services
             return await _context.CustomCategories.AnyAsync(c => c.Name == category);
         }
 
-        public async Task<IList<string>> GetCategories()
+        public async Task<IList<CustomCategoryDto>> GetCategories()
         {
-            return await _context.CustomCategories.Select(c => c.Name).ToListAsync();
+            return await _context.CustomCategories.Select(x => new CustomCategoryDto { Id = x.Id, Name = x.Name }).ToListAsync();
         }
     }
 }

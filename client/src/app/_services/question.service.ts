@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Category } from '../_models/category';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class QuestionService {
       return of(response);
     }
 
-    return this.http.get(this.baseUrl + 'categories').pipe(
+    return this.http.get<Category[]>(this.baseUrl + 'categories').pipe(
       map(response => {
         this.questionCache.set('categories', response);
         return response;

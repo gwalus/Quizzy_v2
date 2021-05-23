@@ -9,6 +9,6 @@ namespace API.Interfaces
         Task<bool> AddQuestion(QuestionToAdd questionModel);
         Task<bool> AddCategory(string category);
         Task<bool> CategoryExists(string category);
-        Task<IList<string>> GetCategories();
+        Task<IList<CustomCategoryDto>> GetCategories();
     }
 }

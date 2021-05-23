@@ -14,7 +14,7 @@ import { TriviaService } from '../_services/trivia.service';
 })
 export class HomeComponent implements OnInit {
   categories: Category[] = [];
-  categoriesFromDatabase: string[] = [];
+  categoriesFromDatabase: Category[] = [];
   colorTypes: string[] = [
     'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'
   ];
@@ -30,23 +30,24 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.loadCategories();
     this.loadCategoriesFromDatabase();
     this.createRandomColorsTable();
+
   }
 
   loadCategories() {
     this.loading = true;
     this.triviaService.getCategories().subscribe(response => {
       this.categories = response as Category[];
-
     });
   }
 
   loadCategoriesFromDatabase() {
     this.questionService.getCategories().subscribe(response => {
-      this.categoriesFromDatabase = response as string[];
-      this.loading = !this.loading;
+      this.categoriesFromDatabase = response as Category[];
+      this.loading = false;
     })
   }
 
@@ -74,7 +75,10 @@ export class HomeComponent implements OnInit {
   }
 
   startWithCustomCategory() {
-    console.log('start');
+    if (this.choosedCategoryFromDatabase) {
+      this.toastr.success('yoooooooooooooohu')
+    }
+    else this.toastr.error('You have not selected any category.');
   }
 
   openModalWithGameOptions() {

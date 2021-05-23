@@ -26,7 +26,7 @@
             <div class="category-inline">
                 <button class="flex-item btn btn-outline-{{getRandomBtnColor(i)}}" style="border: 2px solid;"
                     *ngFor="let category of categoriesFromDatabase; let i = index;"
-                    (click)="chooseCategoryFromDatabase(category)">{{category}}</button>
+                    (click)="chooseCategoryFromDatabase(category.id)">{{category.name}}</button>
             </div>
 
             <div class="text-center m-3 h3">
