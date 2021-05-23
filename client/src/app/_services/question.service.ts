@@ -9,7 +9,7 @@ import { Category } from '../_models/category';
   providedIn: 'root'
 })
 export class QuestionService {
-  baseUrl = environment.baseUrl + 'question/';
+  baseUrl = environment.baseUrl + 'questions';
   questionCache = new Map();
 
   constructor(private http: HttpClient) { }
@@ -20,11 +20,15 @@ export class QuestionService {
       return of(response);
     }
 
-    return this.http.get<Category[]>(this.baseUrl + 'categories').pipe(
+    return this.http.get<Category[]>(this.baseUrl + '/categories').pipe(
       map(response => {
         this.questionCache.set('categories', response);
         return response;
       })
     );
+  }
+
+  getQuestion(categoryId: string) {
+    return this.http.get<Category[]>(this.baseUrl + '?categoryId=' + categoryId);
   }
 }

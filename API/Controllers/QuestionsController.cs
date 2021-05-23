@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class QuestionController : BaseApiController
+    public class QuestionsController : BaseApiController
     {
         private readonly IQuestionService _questionService;
-        public QuestionController(IQuestionService questionService)
+        public QuestionsController(IQuestionService questionService)
         {
             _questionService = questionService;
         }
@@ -20,7 +20,7 @@ namespace API.Controllers
             return await _questionService.GetCategories();
         }
 
-        [HttpGet("question")]
+        [HttpGet("")]
         public async Task<ActionResult> GetQuestion(int categoryId)
         {
             var question = await _questionService.GetQuestionForCategory(categoryId);
