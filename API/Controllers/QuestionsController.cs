@@ -30,5 +30,14 @@ namespace API.Controllers
 
             return Ok(question);
         }
+
+        [HttpGet("check-answer")]
+        public async Task<ActionResult> CheckAnswer(int categoryId, string userAnswer)
+        {
+            if (await _questionService.CheckAnswer(categoryId, userAnswer))
+                return Ok("Good answer");
+
+            return Ok("Incorrect");
+        }
     }
 }
