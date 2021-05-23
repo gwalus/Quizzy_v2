@@ -20,18 +20,21 @@
             <button type="button" class="btn btn-secondary btn-md ml-2 p-2" (click)="openModalWithGameOptions()">Let's
                 play!</button>
         </div>
-        <hr class="my-2">
 
-        <div class="category-inline">
-            <button class="flex-item btn btn-outline-{{getRandomBtnColor(i)}}" style="border: 2px solid;"
-                *ngFor="let category of categoriesFromDatabase; let i = index;"
-                (click)="chooseCategoryFromDatabase(category)">{{category}}</button>
-        </div>
+        <ng-container *ngIf="categoriesFromDatabase.length > 0">
+            <hr class="my-2">
+            <div class="category-inline">
+                <button class="flex-item btn btn-outline-{{getRandomBtnColor(i)}}" style="border: 2px solid;"
+                    *ngFor="let category of categoriesFromDatabase; let i = index;"
+                    (click)="chooseCategoryFromDatabase(category)">{{category}}</button>
+            </div>
 
-        <div class="text-center m-3 h3">
-            <p class="d-inline-block">Try it with custom categories</p>
-            <button type="button" class="btn btn-secondary btn-md ml-2 p-2" (click)="startWithCustomCategory()">Let's
-                play!</button>
-        </div>
+            <div class="text-center m-3 h3">
+                <p class="d-inline-block">Try it with custom categories</p>
+                <button type="button" class="btn btn-secondary btn-md ml-2 p-2"
+                    (click)="startWithCustomCategory()">Let's
+                    play!</button>
+            </div>
+        </ng-container>
     </div>
 </div>

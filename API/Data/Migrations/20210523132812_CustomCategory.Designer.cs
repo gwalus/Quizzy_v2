@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    [Migration("20210522120855_CustomCategory")]
+    [Migration("20210523132812_CustomCategory")]
     partial class CustomCategory
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
