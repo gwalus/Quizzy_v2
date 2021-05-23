@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Interfaces;
@@ -32,12 +33,12 @@ namespace API.Controllers
         }
 
         [HttpGet("check-answer")]
-        public async Task<ActionResult> CheckAnswer(int categoryId, string userAnswer)
+        public async Task<string> CheckAnswer(int categoryId, string userAnswer)
         {
             if (await _questionService.CheckAnswer(categoryId, userAnswer))
-                return Ok("Good answer");
+                return JsonSerializer.Serialize("Good answer");
 
-            return Ok("Incorrect");
+            return JsonSerializer.Serialize("Incorrect");
         }
     }
 }

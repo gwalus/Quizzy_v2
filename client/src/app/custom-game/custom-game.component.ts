@@ -11,7 +11,7 @@ import { QuestionService } from '../_services/question.service';
 })
 export class CustomGameComponent implements OnInit {
   currentQuestion: QuestionDb;
-
+  answerColorDisplay: string[] = []
 
   constructor(private questionService: QuestionService, private router: Router, private toastr: ToastrService) { }
 
@@ -27,5 +27,32 @@ export class CustomGameComponent implements OnInit {
       this.router.navigateByUrl('');
       this.toastr.error('This category does not any questions yet. Please contact with admin!');
     })
+  }
+
+  checkAnswer(categoryId: string, userAnswer: string, index: number) {
+
+
+    this.questionService.checkAnswer(categoryId, userAnswer).subscribe(response => {
+      if (response === 'Good answer') {
+        this.setAnswerBorders(index, 'success');
+      } else {
+        this.setAnswerBorders(index, 'danger');
+      }
+    })
+  }
+
+  setAnswerBorders(index: number, type: string) {
+    let bad = 'primary'
+
+    const count = this.currentQuestion.answers.length;
+    let answersBorderType: string[] = [];
+
+    for (let i = 0; i < count; i++) {
+      answersBorderType.push(bad);
+    }
+
+    answersBorderType[index] = type;
+
+    this.answerColorDisplay = answersBorderType;
   }
 }
