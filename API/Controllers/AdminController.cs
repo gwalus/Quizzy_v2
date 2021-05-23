@@ -31,7 +31,7 @@ namespace API.Controllers
         public async Task<ActionResult> AddQuestion([FromBody] QuestionToAdd question)
         {
             if (await _questionService.AddQuestion(question))
-                return Ok("Question has been added");
+                return Ok(JsonSerializer.Serialize("Question has been added"));
 
             return BadRequest();
         }
