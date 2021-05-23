@@ -37,4 +37,8 @@ export class QuestionService {
   setCategory(categoryId: string) {
     this.choosedCategory = categoryId;
   }
+
+  checkAnswer(categoryId: string, userAnswer: string) {
+    return this.http.get(this.baseUrl + '/check-answer?categoryId=' + categoryId + '&userAnswer=' + userAnswer);
+  }
 }
