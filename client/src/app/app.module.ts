@@ -21,6 +21,7 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { HasRoleDirective } from './_directives/has-role.directive';
 import { AdminComponent } from './admin/admin.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { CustomGameComponent } from './custom-game/custom-game.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -35,7 +36,8 @@ export function createTranslateLoader(http: HttpClient) {
     GameComponent,
     GameOptionsComponent,
     HasRoleDirective,
-    AdminComponent
+    AdminComponent,
+    CustomGameComponent
   ],
   imports: [
     BrowserModule,

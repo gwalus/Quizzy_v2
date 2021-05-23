@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Category } from '../_models/category';
+import { QuestionDb } from '../_models/questionDb';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,6 @@ export class QuestionService {
   }
 
   getQuestion(categoryId: string) {
-    return this.http.get<Category[]>(this.baseUrl + '?categoryId=' + categoryId);
+    return this.http.get<QuestionDb>(this.baseUrl + '?categoryId=' + categoryId);
   }
 }

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { GameOptionsComponent } from '../game-options/game-options.component';
 import { Category } from '../_models/category';
-import { Question } from '../_models/question';
+import { QuestionDb } from '../_models/questionDb';
 import { QuestionService } from '../_services/question.service';
 import { TriviaService } from '../_services/trivia.service';
 
@@ -24,7 +23,7 @@ export class HomeComponent implements OnInit {
   choosedCategoryFromDatabase?: string;
   loading = false;
 
-  questionFromDatabase: Question;
+  questionFromDatabase: QuestionDb;
 
   bsModalRef: BsModalRef;
 
@@ -80,9 +79,9 @@ export class HomeComponent implements OnInit {
   startWithCustomCategory() {
     if (this.choosedCategoryFromDatabase) {
       this.questionService.getQuestion(this.choosedCategoryFromDatabase).subscribe(response => {
-        this.questionFromDatabase = response
-      }
-      )
+        this.questionFromDatabase = response as QuestionDb;
+        console.log(response);
+      })
     }
     else this.toastr.error('You have not selected any category.');
   }
