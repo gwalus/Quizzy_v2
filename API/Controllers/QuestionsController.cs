@@ -32,10 +32,10 @@ namespace API.Controllers
             return Ok(question);
         }
 
-        [HttpGet("check-answer")]
-        public async Task<string> CheckAnswer([FromBody] int questionId, string userAnswer)
+        [HttpPost("check-answer")]
+        public async Task<string> CheckAnswer([FromBody] AnswerModel answerModel)
         {
-            if (await _questionService.CheckAnswer(questionId, userAnswer))
+            if (await _questionService.CheckAnswer(answerModel.QuestionId, answerModel.UserAnswer))
                 return JsonSerializer.Serialize("Good answer");
 
             return JsonSerializer.Serialize("Incorrect");

@@ -22,7 +22,6 @@ export class CustomGameComponent implements OnInit {
   loadQuestion() {
     this.questionService.getQuestion().subscribe(response => {
       this.currentQuestion = response as QuestionDb;
-      console.log(response);
     }, () => {
       this.router.navigateByUrl('');
       this.toastr.error('This category does not any questions yet. Please contact with admin!');
@@ -31,9 +30,6 @@ export class CustomGameComponent implements OnInit {
 
   checkAnswer(categoryId: string, userAnswer: string, index: number) {
     this.questionService.checkAnswer(categoryId, userAnswer).subscribe(response => {
-      console.log(response);
-      console.log(categoryId)
-      console.log(userAnswer)
       if (response === 'Good answer') {
         this.setAnswerBorders(index, 'success');
       } else {

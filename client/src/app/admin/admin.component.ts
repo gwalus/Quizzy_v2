@@ -25,7 +25,7 @@ export class AdminComponent implements OnInit {
     this.getCategories();
 
     this.categoryForm = this.fb.group({
-      category: ['', [Validators.required, Validators.minLength(4)]]
+      category: ['', [Validators.required, Validators.minLength(3)]]
     });
 
     this.questionForm = this.fb.group({
@@ -65,7 +65,6 @@ export class AdminComponent implements OnInit {
   }
 
   addIncorrectAnswer() {
-    // this.answers.push(this.fb.group({ answer: ['', Validators.required] }));
     this.answers.push(this.newIncorrectAnswer());
   }
 

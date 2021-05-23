@@ -7,14 +7,14 @@
         <div>
             <tabset>
                 <tab heading="Add category">
-                    <form class="mt-2" [formGroup]="categoryForm" style="margin-top: 20px;" (ngSubmit)="addCategory()">
+                    <form class="mt-4" [formGroup]="categoryForm" style="margin-top: 20px;" (ngSubmit)="addCategory()">
                         <div class="form-group form-control p-5">
                             <label>Category name: </label>
                             <input type="text" class="form-control" placeholder="Category" formControlName="category">
 
                             <div *ngIf="categoryForm?.invalid && (categoryForm?.dirty || categoryForm?.touched)"
                                 class="alert alert-danger">
-                                Question is required and minimum lenght must be at least 4.
+                                Question is required and minimum lenght must be at least 3.
                             </div>
 
                             <div class="float-right">
@@ -89,8 +89,8 @@
                         </div>
                     </form>
 
-                    <p>Form value: {{questionForm.value | json}}</p>
-                    <p>Form status: {{questionForm.status | json}}</p>
+                    <!-- <p>Form value: {{questionForm.value | json}}</p>
+                    <p>Form status: {{questionForm.status | json}}</p> -->
                 </tab>
             </tabset>
         </div>
