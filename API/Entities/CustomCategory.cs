@@ -6,6 +6,6 @@ namespace API.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<CustomQuestion> Questions { get; set; }
+        public virtual ICollection<CustomQuestion> Questions { get; set; }
     }
 }

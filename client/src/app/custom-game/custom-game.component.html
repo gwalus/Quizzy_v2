@@ -1,0 +1,27 @@
+<div class="container" style="margin: 3% auto">
+    <div class="jumbotron" style="padding: 1rem 4rem 2rem 4rem">
+        <div class="mt-0">
+            <div class="row text-right">
+                <h3 class="display-5">{{currentQuestion?.category}}</h3>
+            </div>
+
+            <div class="row text-left">
+                <span class="h3">Question</span>
+            </div>
+
+            <hr class="my-2">
+            <p class="lead wrap mb-4">{{currentQuestion?.question}}</p>
+
+
+            <div class="row">
+                <div class="col" *ngFor="let answer of currentQuestion?.answers; let i = index">
+                    <div class="card border-{{answerColorDisplay[i]}} mb-3" style="max-width: 20rem;">
+                        <div class="card-body" (click)="checkAnswer(currentQuestion.questionId, answer, i)">
+                            {{answer}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

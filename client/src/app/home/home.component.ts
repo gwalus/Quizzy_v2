@@ -4,6 +4,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { GameOptionsComponent } from '../game-options/game-options.component';
 import { Category } from '../_models/category';
+import { QuestionDb } from '../_models/questionDb';
+import { QuestionService } from '../_services/question.service';
 import { TriviaService } from '../_services/trivia.service';
 
 @Component({
@@ -13,35 +15,47 @@ import { TriviaService } from '../_services/trivia.service';
 })
 export class HomeComponent implements OnInit {
   categories: Category[] = [];
+  categoriesFromDatabase: Category[] = [];
   colorTypes: string[] = [
     'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'
   ];
   randomTypes: string[] = [];
   choosedCategory?: string;
+  choosedCategoryFromDatabase?: string;
   loading = false;
+
+  questionFromDatabase: QuestionDb;
 
   bsModalRef: BsModalRef;
 
-  constructor(private triviaService: TriviaService, private toastr: ToastrService, private modalService: BsModalService) {
+  constructor(private triviaService: TriviaService, private toastr: ToastrService, private modalService: BsModalService,
+    private questionService: QuestionService, private router: Router) {
   }
 
   ngOnInit(): void {
+
     this.loadCategories();
+    this.loadCategoriesFromDatabase();
     this.createRandomColorsTable();
+
   }
 
   loadCategories() {
     this.loading = true;
     this.triviaService.getCategories().subscribe(response => {
       this.categories = response as Category[];
-      this.loading = !this.loading;
     });
   }
 
-  getRandomBtnColor(num: string) {
-    let temp = Number.parseInt(num);
-    temp -= 9;
-    return this.randomTypes[temp];
+  loadCategoriesFromDatabase() {
+    this.questionService.getCategories().subscribe(response => {
+      this.categoriesFromDatabase = response as Category[];
+      this.loading = false;
+    })
+  }
+
+  getRandomBtnColor(num: number) {
+    return this.randomTypes[num];
   }
 
   createRandomColorsTable() {
@@ -56,6 +70,19 @@ export class HomeComponent implements OnInit {
 
   chooseCategory(categoryId: string) {
     this.choosedCategory = categoryId;
+  }
+
+  chooseCategoryFromDatabase(categoryId: string) {
+    this.choosedCategoryFromDatabase = categoryId;
+    console.log(this.choosedCategoryFromDatabase);
+  }
+
+  startWithCustomCategory() {
+    if (this.choosedCategoryFromDatabase) {
+      this.router.navigateByUrl('/custom-game');
+      this.questionService.setCategory(this.choosedCategoryFromDatabase);
+    }
+    else this.toastr.error('You have not selected any category.');
   }
 
   openModalWithGameOptions() {

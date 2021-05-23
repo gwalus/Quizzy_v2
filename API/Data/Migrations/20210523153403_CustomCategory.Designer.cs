@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    [Migration("20210522120855_CustomCategory")]
+    [Migration("20210523153403_CustomCategory")]
     partial class CustomCategory
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,7 +182,7 @@ namespace API.Data.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<int?>("CategoryIdId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("integer");
 
                     b.Property<string>("CategoryName")
@@ -196,7 +196,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryIdId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("CustomQuestions");
                 });
@@ -323,11 +323,11 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.CustomQuestion", b =>
                 {
-                    b.HasOne("API.Entities.CustomCategory", "CategoryId")
+                    b.HasOne("API.Entities.CustomCategory", "Category")
                         .WithMany("Questions")
-                        .HasForeignKey("CategoryIdId");
+                        .HasForeignKey("CategoryId");
 
-                    b.Navigation("CategoryId");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
