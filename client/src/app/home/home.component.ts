@@ -4,6 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { GameOptionsComponent } from '../game-options/game-options.component';
 import { Category } from '../_models/category';
+import { QuestionService } from '../_services/question.service';
 import { TriviaService } from '../_services/trivia.service';
 
 @Component({
@@ -13,6 +14,7 @@ import { TriviaService } from '../_services/trivia.service';
 })
 export class HomeComponent implements OnInit {
   categories: Category[] = [];
+  categoriesFromDatabase: string[] = [];
   colorTypes: string[] = [
     'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'
   ];
@@ -22,11 +24,13 @@ export class HomeComponent implements OnInit {
 
   bsModalRef: BsModalRef;
 
-  constructor(private triviaService: TriviaService, private toastr: ToastrService, private modalService: BsModalService) {
+  constructor(private triviaService: TriviaService, private toastr: ToastrService, private modalService: BsModalService,
+    private questionService: QuestionService) {
   }
 
   ngOnInit(): void {
     this.loadCategories();
+    this.loadCategoriesFromDatabase();
     this.createRandomColorsTable();
   }
 
@@ -36,6 +40,13 @@ export class HomeComponent implements OnInit {
       this.categories = response as Category[];
       this.loading = !this.loading;
     });
+  }
+
+  loadCategoriesFromDatabase() {
+    this.questionService.getCategories().subscribe(response => {
+      this.categoriesFromDatabase = response as string[];
+      this.loading = !this.loading;
+    })
   }
 
   getRandomBtnColor(num: string) {
