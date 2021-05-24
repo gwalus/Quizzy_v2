@@ -12,6 +12,9 @@ import { QuestionService } from '../_services/question.service';
 export class CustomGameComponent implements OnInit {
   currentQuestion: QuestionDb;
   answerColorDisplay: string[] = []
+  answerResult: string;
+  isAnswered = false;
+  answerType: string;
 
   constructor(private questionService: QuestionService, private router: Router, private toastr: ToastrService) { }
 
@@ -32,9 +35,16 @@ export class CustomGameComponent implements OnInit {
     this.questionService.checkAnswer(categoryId, userAnswer).subscribe(response => {
       if (response === 'Good answer') {
         this.setAnswerBorders(index, 'success');
+        this.answerResult = response;
+        this.isAnswered = true;
+        this.answerType = 'success';
       } else {
         this.setAnswerBorders(index, 'danger');
+        this.answerResult = response;
+        this.isAnswered = true;
+        this.answerType = 'danger';
       }
+
     })
   }
 
