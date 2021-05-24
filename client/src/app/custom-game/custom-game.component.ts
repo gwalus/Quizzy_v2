@@ -15,6 +15,7 @@ export class CustomGameComponent implements OnInit {
   answerResult: string;
   isAnswered = false;
   answerType: string;
+  questionIds: string[] = []
 
   constructor(private questionService: QuestionService, private router: Router, private toastr: ToastrService) { }
 
@@ -25,8 +26,19 @@ export class CustomGameComponent implements OnInit {
   loadQuestion() {
     this.resetFields();
 
-    this.questionService.getQuestion().subscribe(response => {
-      this.currentQuestion = response as QuestionDb;
+    this.questionService.getQuestion().subscribe((response: QuestionDb) => {
+      this.currentQuestion = response;
+
+      // let ids = this.questionIds;
+
+      // if(!ids.includes(response.questionId)) {
+      //   this.questionIds.push(response.questionId);
+      // } else {
+        
+      // }
+
+      
+      console.log(this.questionIds);
     }, () => {
       this.router.navigateByUrl('');
       this.toastr.error('This category does not any questions yet. Please contact with admin!');

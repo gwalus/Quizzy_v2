@@ -67,13 +67,16 @@ namespace API.Services
                     QuestionId = x.Id,
                     Category = x.CategoryName,
                     Question = x.Question,
-                    Answers = x.IncorrectAnswers.Select(y => y.IncorrectAnswer).ToList()
+                    Answers = new List<string>(x.IncorrectAnswers.Select(y => y.IncorrectAnswer).ToList())
                 })
                 .FirstOrDefaultAsync();
 
             if (question != null)
             {
                 var correctAnswer = await _context.CustomQuestions.Where(x => x.Id == question.QuestionId).Select(x => x.CorrectAnswer).FirstOrDefaultAsync();
+                var count = await _context.CustomQuestions.Where(x => x.Category.Id == categoryId).CountAsync();
+
+                question.TotalQuestions = count;
 
                 question.Answers.Add(correctAnswer);
 

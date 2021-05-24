@@ -3,4 +3,5 @@ export interface QuestionDb {
     category: string;
     question: string;
     answers: string[];
+    totalQuestions: number;
 }
