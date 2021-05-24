@@ -74,13 +74,11 @@ namespace API.Services
             if (question != null)
             {
                 var correctAnswer = await _context.CustomQuestions.Where(x => x.Id == question.QuestionId).Select(x => x.CorrectAnswer).FirstOrDefaultAsync();
-                var count = await _context.CustomQuestions.Where(x => x.Category.Id == categoryId).CountAsync();
-
-                question.TotalQuestions = count;
-
+                
+                question.TotalQuestions = await _context.CustomQuestions.Where(x => x.Category.Id == categoryId).CountAsync();
                 question.Answers.Add(correctAnswer);
 
-                question.Answers.OrderBy(_ => Guid.NewGuid());
+                question.Answers = question.Answers.OrderBy(_ => Guid.NewGuid()).ToList();
             }
 
             return question;
