@@ -15,7 +15,11 @@ export class CustomGameComponent implements OnInit {
   answerResult: string;
   isAnswered = false;
   answerType: string;
-  questionIds: string[] = []
+  questionIds: string[] = [];
+  questionNumber = 1;
+  totalQuestions: number;
+  endQuiz = false;
+  points: number = 0;
 
   constructor(private questionService: QuestionService, private router: Router, private toastr: ToastrService) { }
 
@@ -27,18 +31,30 @@ export class CustomGameComponent implements OnInit {
     this.resetFields();
 
     this.questionService.getQuestion().subscribe((response: QuestionDb) => {
-      this.currentQuestion = response;
 
-      // let ids = this.questionIds;
 
-      // if(!ids.includes(response.questionId)) {
-      //   this.questionIds.push(response.questionId);
-      // } else {
-        
+      this.totalQuestions = response.totalQuestions;
+      let totalQuestion = response.totalQuestions;
+      let ids = this.questionIds;
+
+      // if (this.questionNumber >= totalQuestion) {
+      //   this.isAnswered = true;
+      //   return;
       // }
 
-      
-      console.log(this.questionIds);
+      if (this.questionNumber <= totalQuestion) {
+        if (!ids.includes(response.questionId)) {
+          this.currentQuestion = response;
+          this.questionIds.push(response.questionId);
+          this.questionNumber++;
+        } else {
+          this.loadQuestion();
+        }
+      } else {
+        this.isAnswered = true;
+        this.endQuiz = true;
+      }
+
     }, () => {
       this.router.navigateByUrl('');
       this.toastr.error('This category does not any questions yet. Please contact with admin!');
@@ -52,13 +68,13 @@ export class CustomGameComponent implements OnInit {
         this.answerResult = response;
         this.isAnswered = true;
         this.answerType = 'success';
+        this.points++;
       } else {
         this.setAnswerBorders(index, 'danger');
         this.answerResult = response;
         this.isAnswered = true;
         this.answerType = 'danger';
       }
-
     })
   }
 

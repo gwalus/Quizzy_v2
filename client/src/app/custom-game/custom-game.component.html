@@ -26,9 +26,15 @@
                     <p class="text-{{answerType}}" style="font-size: 2rem;">{{answerResult}}</p>
 
                     <button class="btn btn-outline-secondary mr-2" routerLink=''>Home</button>
-                    <button class="btn btn-secondary" (click)="loadQuestion()">Next question!</button>
+                    <button class="btn btn-secondary" (click)="loadQuestion()" [hidden]="endQuiz">Next
+                        question!</button>
+                </div>
+
+                <div *ngIf="endQuiz" class="text-center">
+                    <hr class="my-2">
+                    Total<p class="display-5"> {{points}}/{{totalQuestions}}</p>
                 </div>
             </div>
-
         </div>
     </div>
+</div>
