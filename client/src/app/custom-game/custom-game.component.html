@@ -24,6 +24,9 @@
                 </div>
                 <div *ngIf="isAnswered" class="text-center">
                     <p class="text-{{answerType}}" style="font-size: 2rem;">{{answerResult}}</p>
+
+                    <button class="btn btn-outline-secondary mr-2" routerLink=''>Home</button>
+                    <button class="btn btn-secondary" (click)="loadQuestion()">Next question!</button>
                 </div>
             </div>
 

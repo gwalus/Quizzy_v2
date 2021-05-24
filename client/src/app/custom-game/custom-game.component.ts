@@ -23,6 +23,8 @@ export class CustomGameComponent implements OnInit {
   }
 
   loadQuestion() {
+    this.resetFields();
+
     this.questionService.getQuestion().subscribe(response => {
       this.currentQuestion = response as QuestionDb;
     }, () => {
@@ -61,5 +63,12 @@ export class CustomGameComponent implements OnInit {
     answersBorderType[index] = type;
 
     this.answerColorDisplay = answersBorderType;
+  }
+
+  resetFields() {
+    this.answerColorDisplay = [];
+    this.answerResult = '';
+    this.isAnswered = false;
+    this.answerType = '';
   }
 }
