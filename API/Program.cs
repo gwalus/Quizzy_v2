@@ -48,12 +48,20 @@ namespace API
                     UserName = "admin"
                 };
 
+                var defaultUser = new AppUser
+                {
+                    UserName = "user"
+                };
+
                 await userManager.CreateAsync(admin, "Pa$$w0rd");
                 await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });
 
+                await userManager.CreateAsync(defaultUser, "Pa$$w0rd");
+                await userManager.AddToRolesAsync(defaultUser, new[] { "User" });
+
                 await host.RunAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
 
