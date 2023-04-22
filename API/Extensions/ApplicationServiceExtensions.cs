@@ -34,6 +34,9 @@ namespace API.Extensions
                 }
                 else
                 {
+                    // For local prod version on docker.
+                    // connStr = configuration.GetConnectionString("DefaultConnection");
+
                     // Use connection string provided at runtime by Heroku.
                     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
@@ -47,8 +50,9 @@ namespace API.Extensions
                     var pgPass = pgUserPass.Split(":")[1];
                     var pgHost = pgHostPort.Split(":")[0];
                     var pgPort = pgHostPort.Split(":")[1];
+                    var updatedHost = pgHost.Replace("flycast", "internal");
 
-                    connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};sslmode=Prefer;Trust Server Certificate=true";
+                    connStr = $"Server={updatedHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
                 }
 
                 // Whether the connection string came from the local development configuration file
